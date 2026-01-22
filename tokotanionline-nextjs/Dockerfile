@@ -10,11 +10,15 @@ RUN npm ci
 # Copy Prisma schema
 COPY prisma ./prisma
 
-# Generate Prisma Client
+# Generate Prisma Client (doesn't need DATABASE_URL for generation)
 RUN npx prisma generate
 
 # Copy source code
 COPY . .
+
+# Set build-time environment (optional, for Next.js build optimizations)
+ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
 
 # Build Next.js app
 RUN npm run build
@@ -29,14 +33,18 @@ ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 ENV NEXT_TELEMETRY_DISABLED=1
 
-# Copy necessary files from builder
-COPY --from=builder /app/package.json ./
-COPY --from=builder /app/package-lock.json* ./
-COPY --from=builder /app/node_modules ./node_modules
+# Install only production dependencies
+COPY package.json package-lock.json* ./
+RUN npm ci --only=production && npm cache clean --force
+
+# Copy Prisma files and generate client in production
+COPY prisma ./prisma
+RUN npx prisma generate
+
+# Copy built application
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/next.config.mjs ./
-COPY --from=builder /app/prisma ./prisma
 
 # Expose port
 EXPOSE 3000
