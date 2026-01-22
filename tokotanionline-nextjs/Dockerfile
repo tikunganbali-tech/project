@@ -33,9 +33,12 @@ ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 ENV NEXT_TELEMETRY_DISABLED=1
 
-# Install only production dependencies
+# Copy package files
 COPY package.json package-lock.json* ./
-RUN npm ci --only=production && npm cache clean --force
+
+# Install ALL dependencies (Prisma needed for runtime)
+# Use npm install instead of npm ci for more flexibility
+RUN npm install --production --no-audit --no-fund && npm cache clean --force
 
 # Copy Prisma files and generate client in production
 COPY prisma ./prisma
