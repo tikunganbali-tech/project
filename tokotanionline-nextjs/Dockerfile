@@ -5,8 +5,8 @@ WORKDIR /app
 
 # Install ALL dependencies (including devDependencies for build)
 COPY package.json package-lock.json* ./
-# Use npm install if package-lock.json doesn't exist, otherwise use npm ci
-RUN if [ -f package-lock.json ]; then npm ci; else npm install; fi
+# Use npm install for more flexibility (handles lock file issues better)
+RUN npm install --no-audit --no-fund
 
 # Copy Prisma schema
 COPY prisma ./prisma
