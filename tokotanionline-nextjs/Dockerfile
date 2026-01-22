@@ -36,9 +36,10 @@ ENV NEXT_TELEMETRY_DISABLED=1
 # Copy package files
 COPY package.json package-lock.json* ./
 
-# Install ALL dependencies (Prisma needed for runtime)
-# Use npm install instead of npm ci for more flexibility
-RUN npm install --production --no-audit --no-fund && npm cache clean --force
+# Install production dependencies + Prisma (needed for generate)
+RUN npm install --production --no-audit --no-fund && \
+    npm install prisma --no-save --no-audit --no-fund && \
+    npm cache clean --force
 
 # Copy Prisma files and generate client in production
 COPY prisma ./prisma
