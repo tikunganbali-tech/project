@@ -1,0 +1,1 @@
+-- Baseline migration: All tables already exist in database

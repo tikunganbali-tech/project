@@ -1,0 +1,58 @@
+{
+  "title": "Dimodis - Solusi Pertanian",
+  "description": "Fungisida kombinasi untuk antraknosa & bercak daun dengan proteksi luar-dalam.",
+  "canonical": "http://localhost:3000/produk/dimodis",
+  "meta": {
+    "og:title": "Dimodis - Solusi Pertanian",
+    "og:description": "Fungisida kombinasi untuk antraknosa & bercak daun dengan proteksi luar-dalam.",
+    "og:type": "website",
+    "og:image": "/images/Herbicide.jpg",
+    "og:url": "http://localhost:3000/produk/dimodis"
+  },
+  "schema": [
+    {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": "Dimodis",
+      "description": "Antraknosa menyebabkan busuk buah. Dimodis melindungi dan menghambat perkembangan jamur di jaringan.<br><br>Fungisida kombinasi untuk antraknosa & bercak daun dengan proteksi luar-dalam. Produk Fungisida berkualitas tinggi.  Keunggulan: Dual action protektif + sistemik, coverage luas, bantu kualitas panen..  Cara penggunaan: Semprot merata, ulangi 7–10 hari atau sesuai ancaman penyakit; rotasi bahan aktif..  Produk pertanian terpercaya untuk hasil panen optimal. Dapatkan produk berkualitas dengan harga terbaik hanya di TOKO TANI ONLINE. Produk Fungisida berkualitas tinggi.  Keunggulan: Dual action protektif + sistemik, coverage luas, bantu kualitas panen..  Cara penggunaan: Semprot merata, ulangi 7–10 hari atau sesuai ancaman penyakit; rotasi bahan aktif..  Produk pertanian terpercaya untuk hasil panen optimal. Dapatkan produk berkualitas dengan harga terbaik hanya di TOKO TANI ONLINE.",
+      "image": "/images/Herbicide.jpg",
+      "category": "Fungisida",
+      "offers": {
+        "@type": "Offer",
+        "price": 56900,
+        "priceCurrency": "IDR",
+        "availability": "https://schema.org/InStock"
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Masalah apa yang diselesaikan produk ini?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Antraknosa menyebabkan busuk buah. Dimodis melindungi dan menghambat perkembangan jamur di jaringan."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Bagaimana cara aplikasi dan dosis produk ini?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Semprot merata, ulangi 7–10 hari atau sesuai ancaman penyakit; rotasi bahan aktif. 1–1.5 gr per liter air."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Apa catatan keamanan produk ini?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Gunakan APD; rotasi bahan aktif; simpan kering."
+          }
+        }
+      ]
+    }
+  ]
+}

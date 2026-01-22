@@ -1,0 +1,47 @@
+﻿
+> tokotanionline-nextjs@0.1.0 build
+> next build
+
+  Γû▓ Next.js 14.2.18
+  - Environments: .env.local, .env
+
+   Creating an optimized production build ...
+node.exe :  ΓÜá Compiled with warnings
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" "C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ( ΓÜá Compiled with warnings:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+./app/api/analytics/exit-intent/route.ts
+Module not found: Can't resolve '@/lib/analytics/truth-engine' in 
+'C:\Users\PC-Desktop\Downloads\AGRICULTURAL\tokotanionline-nextjs\app\api\analytics\exit-intent'
+
+Import trace for requested module:
+./app/api/analytics/exit-intent/route.ts
+
+./app/api/analytics/exit-intent/route.ts
+Module not found: Can't resolve '@/lib/analytics/intent-segmentation' in 
+'C:\Users\PC-Desktop\Downloads\AGRICULTURAL\tokotanionline-nextjs\app\api\analytics\exit-intent'
+
+Import trace for requested module:
+./app/api/analytics/exit-intent/route.ts
+
+   Skipping linting
+   Checking validity of types ...
+Failed to compile.
+
+./app/api/admin/system/confidence/route.ts:124:11
+Type error: Type '"ONLINE"' is not assignable to type '"OFFLINE"'.
+
+[0m [90m 122 |[39m         [36mconst[39m healthData [33m=[39m [36mawait[39m 
+healthResponse[33m.[39mjson()[33m.[39m[36mcatch[39m(() [33m=>[39m [36mnull[39m)[33m;[39m[0m
+[0m [90m 123 |[39m         engineStability [33m=[39m {[0m
+[0m[31m[1m>[22m[39m[90m 124 |[39m           status[33m:[39m [32m'ONLINE'[39m [36mas[39m 
+[36mconst[39m[33m,[39m[0m
+[0m [90m     |[39m           [31m[1m^[22m[39m[0m
+[0m [90m 125 |[39m           lastHeartbeat[33m:[39m healthData[33m?[39m[33m.[39mtimestamp [33m||[39m 
+[36mnew[39m [33mDate[39m()[33m.[39mtoISOString()[33m,[39m[0m
+[0m [90m 126 |[39m           message[33m:[39m [32m'Engine Hub online dan responsif.'[39m[33m,[39m[0m
+[0m [90m 127 |[39m         }[33m;[39m[0m

@@ -1,0 +1,65 @@
+{
+  "title": "Cara Mengendalikan Penyakit Bercak Daun pada Tanaman Sayuran",
+  "description": "Panduan praktis mengendalikan penyakit bercak daun yang sering menyerang tanaman sayuran dengan menggunakan fungisida yang tepat.",
+  "canonical": "http://localhost:3000/blog/cara-mengendalikan-penyakit-bercak-daun-pada-tanaman-sayuran",
+  "meta": {
+    "og:title": "Cara Mengendalikan Penyakit Bercak Daun pada Tanaman Sayuran",
+    "og:description": "Panduan praktis mengendalikan penyakit bercak daun yang sering menyerang tanaman sayuran dengan menggunakan fungisida yang tepat.",
+    "og:type": "article",
+    "og:image": "/images/blog/cara-mengendalikan-penyakit-bercak-daun-pada-tanam-2c6114d3.jpg",
+    "og:url": "http://localhost:3000/blog/cara-mengendalikan-penyakit-bercak-daun-pada-tanaman-sayuran",
+    "article:published_time": "2025-12-24T05:46:48.195Z"
+  },
+  "schema": [
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Cara Mengendalikan Penyakit Bercak Daun pada Tanaman Sayuran",
+      "description": "Panduan praktis mengendalikan penyakit bercak daun yang sering menyerang tanaman sayuran dengan menggunakan fungisida yang tepat.",
+      "image": "/images/blog/cara-mengendalikan-penyakit-bercak-daun-pada-tanam-2c6114d3.jpg",
+      "datePublished": "2025-12-24T05:46:48.195Z",
+      "author": {
+        "@type": "Person",
+        "name": "Admin TOKOTANIONLINE"
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Beranda",
+          "item": "http://localhost:3000"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "http://localhost:3000/blog"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Cara Mengendalikan Penyakit Bercak Daun pada Tanaman Sayuran",
+          "item": "http://localhost:3000/blog/cara-mengendalikan-penyakit-bercak-daun-pada-tanaman-sayuran"
+        }
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Apa itu Cara Mengendalikan Penyakit Bercak Daun pada Tanaman Sayuran?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Panduan praktis mengendalikan penyakit bercak daun yang sering menyerang tanaman sayuran dengan menggunakan fungisida yang tepat."
+          }
+        }
+      ]
+    }
+  ]
+}

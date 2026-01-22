@@ -1,0 +1,63 @@
+{
+  "title": "Simulated Blog sim_1766823608472_ovqzhp32iqm | TOKO TANI ONLINE",
+  "description": "Simulated blog excerpt",
+  "canonical": "http://localhost:3000/blog/simulated-blog-sim_1766823608472_oqevdy6dcup",
+  "meta": {
+    "og:title": "Simulated Blog sim_1766823608472_ovqzhp32iqm | TOKO TANI ONLINE",
+    "og:description": "Simulated blog excerpt",
+    "og:type": "article",
+    "og:url": "http://localhost:3000/blog/simulated-blog-sim_1766823608472_oqevdy6dcup",
+    "article:published_time": "2025-12-27T08:20:08.472Z"
+  },
+  "schema": [
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Simulated Blog sim_1766823608472_ovqzhp32iqm",
+      "description": "Simulated blog excerpt",
+      "datePublished": "2025-12-27T08:20:08.472Z",
+      "author": {
+        "@type": "Person",
+        "name": "Admin"
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Beranda",
+          "item": "http://localhost:3000"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "http://localhost:3000/blog"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Simulated Blog sim_1766823608472_ovqzhp32iqm",
+          "item": "http://localhost:3000/blog/simulated-blog-sim_1766823608472_oqevdy6dcup"
+        }
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Apa itu Simulated Blog sim_1766823608472_ovqzhp32iqm?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Simulated blog excerpt"
+          }
+        }
+      ]
+    }
+  ]
+}

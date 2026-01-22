@@ -1,0 +1,58 @@
+{
+  "title": "Cadilac - Solusi Pertanian",
+  "description": "Fungisida kombinasi protektif-sistemik untuk bercak daun dan busuk buah.",
+  "canonical": "http://localhost:3000/produk/cadilac",
+  "meta": {
+    "og:title": "Cadilac - Solusi Pertanian",
+    "og:description": "Fungisida kombinasi protektif-sistemik untuk bercak daun dan busuk buah.",
+    "og:type": "website",
+    "og:image": "/images/Herbicide.jpg",
+    "og:url": "http://localhost:3000/produk/cadilac"
+  },
+  "schema": [
+    {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": "Cadilac",
+      "description": "Bercak daun dan busuk buah menurunkan hasil. Cadilac melindungi luar-dalam, menghambat perkembangan jamur.<br><br>Fungisida kombinasi protektif-sistemik untuk bercak daun dan busuk buah. Produk Fungisida berkualitas tinggi.  Keunggulan: Dua mode kerja, protektif + sistemik, coverage luas, membantu kualitas panen..  Cara penggunaan: Semprot merata pada daun dan buah, ulangi 7–10 hari atau sesuai tekanan penyakit..  Produk pertanian terpercaya untuk hasil panen optimal. Dapatkan produk berkualitas dengan harga terbaik hanya di TOKO TANI ONLINE. Produk Fungisida berkualitas tinggi.  Keunggulan: Dua mode kerja, protektif + sistemik, coverage luas, membantu kualitas panen..  Cara penggunaan: Semprot merata pada daun dan buah, ulangi 7–10 hari atau sesuai tekanan penyakit..  Produk pertanian terpercaya untuk hasil panen optimal. Dapatkan produk berkualitas dengan harga terbaik hanya di TOKO TANI ONLINE.",
+      "image": "/images/Herbicide.jpg",
+      "category": "Fungisida",
+      "offers": {
+        "@type": "Offer",
+        "price": 54900,
+        "priceCurrency": "IDR",
+        "availability": "https://schema.org/InStock"
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Masalah apa yang diselesaikan produk ini?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Bercak daun dan busuk buah menurunkan hasil. Cadilac melindungi luar-dalam, menghambat perkembangan jamur."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Bagaimana cara aplikasi dan dosis produk ini?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Semprot merata pada daun dan buah, ulangi 7–10 hari atau sesuai tekanan penyakit. 1–1.5 gr per liter air."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Apa catatan keamanan produk ini?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Gunakan APD; rotasi bahan aktif; simpan kering dan aman."
+          }
+        }
+      ]
+    }
+  ]
+}

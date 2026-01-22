@@ -1,0 +1,58 @@
+{
+  "title": "Gracia - Solusi Pertanian",
+  "description": "Insektisida berbahan aktif modern untuk trips/aphid/whitefly dengan efek kontak-lambung.",
+  "canonical": "http://localhost:3000/produk/gracia",
+  "meta": {
+    "og:title": "Gracia - Solusi Pertanian",
+    "og:description": "Insektisida berbahan aktif modern untuk trips/aphid/whitefly dengan efek kontak-lambung.",
+    "og:type": "website",
+    "og:image": "/images/CabbageSeeds.jpg",
+    "og:url": "http://localhost:3000/produk/gracia"
+  },
+  "schema": [
+    {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": "Gracia",
+      "description": "Trips/aphid merusak daun & buah. Gracia menekan populasi dengan efek cepat dan relatif selektif.<br><br>Insektisida berbahan aktif modern untuk trips/aphid/whitefly dengan efek kontak-lambung. Produk Insektisida berkualitas tinggi.  Keunggulan: Bahan aktif modern, selektif, efektif menekan serangga penghisap..  Cara penggunaan: Semprot merata, fokus bawah daun. Rotasi bahan aktif untuk cegah resistensi..  Produk pertanian terpercaya untuk hasil panen optimal. Dapatkan produk berkualitas dengan harga terbaik hanya di TOKO TANI ONLINE. Produk Insektisida berkualitas tinggi.  Keunggulan: Bahan aktif modern, selektif, efektif menekan serangga penghisap..  Cara penggunaan: Semprot merata, fokus bawah daun. Rotasi bahan aktif untuk cegah resistensi..  Produk pertanian terpercaya untuk hasil panen optimal. Dapatkan produk berkualitas dengan harga terbaik hanya di TOKO TANI ONLINE.",
+      "image": "/images/CabbageSeeds.jpg",
+      "category": "Insektisida",
+      "offers": {
+        "@type": "Offer",
+        "price": 42500,
+        "priceCurrency": "IDR",
+        "availability": "https://schema.org/InStock"
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Masalah apa yang diselesaikan produk ini?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Trips/aphid merusak daun & buah. Gracia menekan populasi dengan efek cepat dan relatif selektif."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Bagaimana cara aplikasi dan dosis produk ini?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Semprot merata, fokus bawah daun. Rotasi bahan aktif untuk cegah resistensi. 0.6–0.8 ml per liter air."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Apa catatan keamanan produk ini?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Gunakan APD; ikuti interval semprot; simpan kering."
+          }
+        }
+      ]
+    }
+  ]
+}

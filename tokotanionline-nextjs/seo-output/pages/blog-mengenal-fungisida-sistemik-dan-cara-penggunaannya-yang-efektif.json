@@ -1,0 +1,65 @@
+{
+  "title": "Mengenal Fungisida Sistemik dan Cara Penggunaannya yang Efektif",
+  "description": "Panduan lengkap tentang fungisida sistemik, jenis-jenisnya, dan cara penggunaan yang tepat untuk mengendalikan penyakit tanaman.",
+  "canonical": "http://localhost:3000/blog/mengenal-fungisida-sistemik-dan-cara-penggunaannya-yang-efektif",
+  "meta": {
+    "og:title": "Mengenal Fungisida Sistemik dan Cara Penggunaannya yang Efektif",
+    "og:description": "Panduan lengkap tentang fungisida sistemik, jenis-jenisnya, dan cara penggunaan yang tepat untuk mengendalikan penyakit tanaman.",
+    "og:type": "article",
+    "og:image": "/images/blog/mengenal-fungisida-sistemik-dan-cara-penggunaannya-2f367fa6.jpg",
+    "og:url": "http://localhost:3000/blog/mengenal-fungisida-sistemik-dan-cara-penggunaannya-yang-efektif",
+    "article:published_time": "2025-12-24T05:46:48.185Z"
+  },
+  "schema": [
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Mengenal Fungisida Sistemik dan Cara Penggunaannya yang Efektif",
+      "description": "Panduan lengkap tentang fungisida sistemik, jenis-jenisnya, dan cara penggunaan yang tepat untuk mengendalikan penyakit tanaman.",
+      "image": "/images/blog/mengenal-fungisida-sistemik-dan-cara-penggunaannya-2f367fa6.jpg",
+      "datePublished": "2025-12-24T05:46:48.185Z",
+      "author": {
+        "@type": "Person",
+        "name": "Admin TOKOTANIONLINE"
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Beranda",
+          "item": "http://localhost:3000"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "http://localhost:3000/blog"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Mengenal Fungisida Sistemik dan Cara Penggunaannya yang Efektif",
+          "item": "http://localhost:3000/blog/mengenal-fungisida-sistemik-dan-cara-penggunaannya-yang-efektif"
+        }
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Apa itu Mengenal Fungisida Sistemik dan Cara Penggunaannya yang Efektif?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Panduan lengkap tentang fungisida sistemik, jenis-jenisnya, dan cara penggunaan yang tepat untuk mengendalikan penyakit tanaman."
+          }
+        }
+      ]
+    }
+  ]
+}

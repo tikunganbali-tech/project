@@ -1,0 +1,344 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* V8 Design Tokens - Agricultural Professional Theme */
+  --primary: #166534; /* Dark Green */
+  --secondary: #15803d; /* Medium Green */
+  --accent: #92400e; /* Earth Brown */
+  --text-dark: #1f2937; /* Dark Gray */
+  --text-medium: #6b7280; /* Medium Gray */
+  --background: #ffffff; /* White */
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  
+  body {
+    @apply text-gray-900 antialiased;
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Reset untuk elemen umum */
+  h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    font-weight: 700; /* Lebih berani - PHASE 1.4 */
+    line-height: 1.2; /* Lebih rapat - PHASE 1.4 */
+  }
+
+  h1 {
+    font-weight: 800; /* H1 paling berani */
+  }
+
+  h2 {
+    font-weight: 700; /* H2 tegas */
+  }
+
+  h3 {
+    font-weight: 600; /* H3 informatif */
+  }
+
+  p {
+    margin: 0;
+    font-weight: 400; /* Body lebih ringan */
+    line-height: 1.7; /* Line-height lebih lega untuk readability */
+    color: #374151; /* Abu gelap, bukan hitam pekat */
+  }
+
+  ul, ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  button {
+    font-family: inherit;
+    cursor: pointer;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-green-700 hover:bg-green-800 text-white font-semibold py-2 px-6 rounded-lg transition-colors inline-flex items-center justify-center;
+  }
+  
+  .btn-secondary {
+    @apply border border-gray-300 hover:bg-gray-50 text-gray-700 font-semibold py-2 px-6 rounded-lg transition-colors inline-flex items-center justify-center;
+  }
+
+  /* Blog Content Styling - Professional Typography */
+  .blog-content {
+    @apply text-gray-800 leading-relaxed;
+  }
+
+  .blog-content p {
+    @apply mb-5 sm:mb-6 text-base sm:text-lg leading-7 sm:leading-8;
+    text-align: justify;
+    text-justify: inter-word;
+    hyphens: auto;
+  }
+
+  .blog-content p:first-of-type {
+    @apply text-lg sm:text-xl font-medium leading-8 sm:leading-9;
+  }
+
+  .blog-content h1,
+  .blog-content h2,
+  .blog-content h3,
+  .blog-content h4,
+  .blog-content h5,
+  .blog-content h6 {
+    @apply font-bold text-gray-900 mt-8 sm:mt-10 mb-4 sm:mb-5;
+    line-height: 1.3;
+  }
+
+  .blog-content h1 {
+    @apply text-2xl sm:text-3xl lg:text-4xl;
+  }
+
+  .blog-content h2 {
+    @apply text-xl sm:text-2xl lg:text-3xl;
+  }
+
+  .blog-content h3 {
+    @apply text-lg sm:text-xl lg:text-2xl;
+  }
+
+  .blog-content h4 {
+    @apply text-base sm:text-lg lg:text-xl;
+  }
+
+  .blog-content ul,
+  .blog-content ol {
+    @apply mb-5 sm:mb-6 ml-5 sm:ml-6 space-y-2 sm:space-y-3;
+  }
+
+  .blog-content ul {
+    @apply list-disc;
+  }
+
+  .blog-content ol {
+    @apply list-decimal;
+  }
+
+  .blog-content li {
+    @apply text-base sm:text-lg leading-7 sm:leading-8 mb-2;
+  }
+
+  .blog-content li p {
+    @apply mb-2;
+  }
+
+  .blog-content strong {
+    @apply font-bold text-gray-900;
+  }
+
+  .blog-content em {
+    @apply italic;
+  }
+
+  .blog-content a {
+    @apply text-green-700 hover:text-green-800 underline font-medium transition-colors;
+  }
+
+  .blog-content blockquote {
+    @apply border-l-4 border-green-600 pl-4 sm:pl-6 py-3 sm:py-4 my-6 sm:my-8 bg-green-50 italic text-gray-700;
+  }
+
+  .blog-content blockquote p {
+    @apply mb-0;
+  }
+
+  .blog-content code {
+    @apply bg-gray-100 px-2 py-1 rounded text-sm font-mono text-gray-800;
+  }
+
+  .blog-content pre {
+    @apply bg-gray-900 text-gray-100 p-4 sm:p-6 rounded-lg overflow-x-auto mb-5 sm:mb-6;
+  }
+
+  .blog-content pre code {
+    @apply bg-transparent text-gray-100 p-0;
+  }
+
+  /* M-04: Section images - structured placement, proper sizing, SEO-safe */
+  .blog-content img {
+    @apply rounded-lg shadow-md my-6 sm:my-8 w-full h-auto;
+    /* Prevent CLS - maintain aspect ratio */
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    /* Section image size: 800x450 (16:9 ratio) */
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+  }
+  
+  /* M-04: Ensure images don't break layout */
+  .blog-content img[src] {
+    min-height: 200px;
+    background-color: #f3f4f6;
+  }
+
+  .blog-content table {
+    @apply w-full border-collapse mb-5 sm:mb-6;
+  }
+
+  .blog-content table th,
+  .blog-content table td {
+    @apply border border-gray-300 px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base;
+  }
+
+  .blog-content table th {
+    @apply bg-green-50 font-semibold text-gray-900;
+  }
+
+  .blog-content table tr:nth-child(even) {
+    @apply bg-gray-50;
+  }
+
+  .blog-content hr {
+    @apply border-gray-300 my-8 sm:my-10;
+  }
+
+  /* Ensure proper spacing after last element */
+  .blog-content > *:last-child {
+    @apply mb-0;
+  }
+}
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Custom scrollbar for tab navigation */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(203 213 225) rgb(241 245 249);
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: rgb(241 245 249);
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: rgb(203 213 225);
+    border-radius: 3px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background-color: rgb(148 163 184);
+  }
+
+  /* Sidebar scrollbar styling - STEP 5: Smooth UX */
+  .sidebar-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+  }
+
+  .sidebar-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .sidebar-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .sidebar-scrollbar::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+    transition: background-color 0.2s ease;
+  }
+
+  .sidebar-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  
+  /* Ensure no overflow on mobile */
+  @media (max-width: 640px) {
+    body {
+      overflow-x: hidden;
+    }
+    
+    * {
+      max-width: 100%;
+    }
+  }
+
+  /* Fix untuk layout yang berantakan */
+  #__next,
+  #root {
+    min-height: 100vh;
+    width: 100%;
+  }
+
+  /* Pastikan container tidak overflow */
+  .container {
+    width: 100%;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* ADMIN HARD FIX - OVERLAY PURGE */
+.admin-layout * {
+  pointer-events: auto !important;
+}
+
+.admin-layout aside {
+  z-index: 10 !important;
+  position: fixed !important;
+}
+
+.admin-layout main {
+  z-index: 1 !important;
+  position: relative;
+  margin-left: 256px; /* Offset for fixed sidebar */
+}
+
+/* KILL ALL BLOCKING OVERLAYS - Only in admin layout - More specific to avoid breaking styles */
+.admin-layout > div[class*="overlay"]:not(aside),
+.admin-layout > div[class*="modal"]:not(aside),
+.admin-layout > div[class*="loading"]:not(aside) {
+  display: none !important;
+}
+
+/* KILL NOTIFICATION OVERLAY SPECIFICALLY - Only full-screen overlays */
+.admin-layout div[class*="fixed"][class*="inset-0"]:not(aside):not([class*="flex"]):not([class*="grid"]) {
+  display: none !important;
+}

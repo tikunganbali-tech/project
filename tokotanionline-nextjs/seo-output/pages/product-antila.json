@@ -1,0 +1,58 @@
+{
+  "title": "Antila - Solusi Pertanian",
+  "description": "Insektisida kontak-lambung untuk aphid/thrips/whitefly dengan efek translaminar.",
+  "canonical": "http://localhost:3000/produk/antila",
+  "meta": {
+    "og:title": "Antila - Solusi Pertanian",
+    "og:description": "Insektisida kontak-lambung untuk aphid/thrips/whitefly dengan efek translaminar.",
+    "og:type": "website",
+    "og:image": "/images/Pesticide.jpg",
+    "og:url": "http://localhost:3000/produk/antila"
+  },
+  "schema": [
+    {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": "Antila",
+      "description": "Serangan serangga penghisap menurunkan kualitas daun & buah. Antila menekan populasi dengan efek translaminar.<br><br>Insektisida kontak-lambung untuk aphid/thrips/whitefly dengan efek translaminar. Produk Insektisida berkualitas tinggi.  Keunggulan: Efek translaminar, kontrol serangga penghisap, residu rendah bila sesuai dosis..  Cara penggunaan: Semprot merata terutama bawah daun, ulangi 7–10 hari. Rotasi bahan aktif untuk cegah resistensi..  Produk pertanian terpercaya untuk hasil panen optimal. Dapatkan produk berkualitas dengan harga terbaik hanya di TOKO TANI ONLINE. Produk Insektisida berkualitas tinggi.  Keunggulan: Efek translaminar, kontrol serangga penghisap, residu rendah bila sesuai dosis..  Cara penggunaan: Semprot merata terutama bawah daun, ulangi 7–10 hari. Rotasi bahan aktif untuk cegah resistensi..  Produk pertanian terpercaya untuk hasil panen optimal. Dapatkan produk berkualitas dengan harga terbaik hanya di TOKO TANI ONLINE.",
+      "image": "/images/Pesticide.jpg",
+      "category": "Insektisida",
+      "offers": {
+        "@type": "Offer",
+        "price": 43900,
+        "priceCurrency": "IDR",
+        "availability": "https://schema.org/InStock"
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Masalah apa yang diselesaikan produk ini?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Serangan serangga penghisap menurunkan kualitas daun & buah. Antila menekan populasi dengan efek translaminar."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Bagaimana cara aplikasi dan dosis produk ini?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Semprot merata terutama bawah daun, ulangi 7–10 hari. Rotasi bahan aktif untuk cegah resistensi. 0.5–1 ml per liter air."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Apa catatan keamanan produk ini?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Gunakan APD, hindari kontak langsung; simpan tertutup di tempat sejuk."
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "title": "Benih Kubis Greennova - Solusi Pertanian",
+  "description": "Benih kubis hibrida cepat tumbuh, krop padat, toleran penyakit daun, cocok dataran tinggi–menengah.",
+  "canonical": "http://localhost:3000/produk/benih-kubis-greennova",
+  "meta": {
+    "og:title": "Benih Kubis Greennova - Solusi Pertanian",
+    "og:description": "Benih kubis hibrida cepat tumbuh, krop padat, toleran penyakit daun, cocok dataran tinggi–menengah.",
+    "og:type": "website",
+    "og:image": "/images/CabbageSeeds.jpg",
+    "og:url": "http://localhost:3000/produk/benih-kubis-greennova"
+  },
+  "schema": [
+    {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": "Benih Kubis Greennova",
+      "description": "Petani kubis kerap gagal karena krop tidak padat dan terserang bercak daun. Benih ini dirancang membentuk krop rapat, toleran penyakit, dan panen serempak.<br><br>Benih kubis hibrida cepat tumbuh, krop padat, toleran penyakit daun, cocok dataran tinggi–menengah. Produk Benih berkualitas tinggi.  Keunggulan: Krop padat & berat, pertumbuhan seragam, toleran bercak daun & busuk hitam, panen serempak..  Cara penggunaan: Semai di tray steril, jaga kelembapan; pindah tanam umur 3–4 minggu dengan media gembur dan drainase baik..  Produk pertanian terpercaya untuk hasil panen optimal. Dapatkan produk berkualitas dengan harga terbaik hanya di TOKO TANI ONLINE. Produk Benih berkualitas tinggi.  Keunggulan: Krop padat & berat, pertumbuhan seragam, toleran bercak daun & busuk hitam, panen serempak..  Cara penggunaan: Semai di tray steril, jaga kelembapan; pindah tanam umur 3–4 minggu dengan media gembur dan drainase baik..  Produk pertanian terpercaya untuk hasil panen optimal. Dapatkan produk berkualitas dengan harga terbaik hanya di TOKO TANI ONLINE.",
+      "image": "/images/CabbageSeeds.jpg",
+      "category": "Benih",
+      "offers": {
+        "@type": "Offer",
+        "price": 63000,
+        "priceCurrency": "IDR",
+        "availability": "https://schema.org/InStock"
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Masalah apa yang diselesaikan produk ini?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Petani kubis kerap gagal karena krop tidak padat dan terserang bercak daun. Benih ini dirancang membentuk krop rapat, toleran penyakit, dan panen serempak."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Bagaimana cara aplikasi dan dosis produk ini?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Semai di tray steril, jaga kelembapan; pindah tanam umur 3–4 minggu dengan media gembur dan drainase baik. Kebutuhan 80–100 gr per hektar (tergantung jarak tanam)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Apa catatan keamanan produk ini?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Simpan benih kering dan sejuk; hindari paparan kelembapan tinggi."
+          }
+        }
+      ]
+    }
+  ]
+}

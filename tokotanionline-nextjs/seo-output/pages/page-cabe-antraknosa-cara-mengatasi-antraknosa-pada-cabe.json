@@ -1,0 +1,21 @@
+{
+  "title": "Cabe Antraknosa untuk Cabe: Panduan Praktis | TOKO TANI ONLINE",
+  "description": "Pelajari cabe antraknosa dari pengalaman petani berpengalaman. Panduan lengkap untuk cabe dengan tips praktis dan solusi terbaik. Artikel ini membahas secara...",
+  "canonical": "http://localhost:3000/cabe-antraknosa-cara-mengatasi-antraknosa-pada-cabe",
+  "meta": {
+    "og:title": "Cabe Antraknosa untuk Cabe: Panduan Praktis | TOKO TANI ONLINE",
+    "og:description": "Pelajari cabe antraknosa dari pengalaman petani berpengalaman. Panduan lengkap untuk cabe dengan tips praktis dan solusi terbaik. Artikel ini membahas secara...",
+    "og:type": "website",
+    "og:url": "http://localhost:3000/cabe-antraknosa-cara-mengatasi-antraknosa-pada-cabe"
+  },
+  "schema": {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Cabe Antraknosa untuk Cabe: Panduan Praktis | TOKO TANI ONLINE",
+    "description": "Pelajari cabe antraknosa dari pengalaman petani berpengalaman. Panduan lengkap untuk cabe dengan tips praktis dan solusi terbaik. Artikel ini membahas secara..."
+  },
+  "keywords": {
+    "crop": "cabe",
+    "disease": "antraknosa"
+  }
+}

@@ -1,0 +1,383 @@
+// ============================================
+// SEO TITAN MODE - ENTERPRISE SEO ENGINE SCHEMA
+// ============================================
+// This file contains additional schema for the enterprise SEO system
+// Add these models to the main schema.prisma file
+
+// ============================================
+// 1. AUTO KEYWORD ENGINE
+// ============================================
+model SeoKeywordMapping {
+  id              String   @id @default(cuid())
+  pageId          String   // Blog ID, Product ID, or Page ID
+  pageType        String   // blog, product, category, page
+  keyword         String
+  keywordType     String   // primary, secondary, semantic, lsi
+  keywordDensity  Float    @default(0.0) // Percentage
+  position        Int?     // Position in content (word index)
+  usageCount      Int      @default(1)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@unique([pageId, pageType, keyword, keywordType])
+  @@index([pageId, pageType])
+  @@index([keyword])
+  @@index([keywordType])
+}
+
+// ============================================
+// 2. AUTO INTERNAL LINK ENGINE
+// ============================================
+model SeoInternalLink {
+  id              String   @id @default(cuid())
+  sourcePageId    String
+  sourcePageType  String   // blog, product, category, page
+  targetPageId    String
+  targetPageType  String
+  anchorText      String
+  anchorKeyword   String?  // Primary keyword of anchor
+  position        Int?     // Position in content
+  isContextual    Boolean  @default(true)
+  relevanceScore  Float    @default(0.0) // 0-1
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([sourcePageId, sourcePageType])
+  @@index([targetPageId, targetPageType])
+  @@index([anchorKeyword])
+}
+
+// ============================================
+// 3. ON-PAGE SEO OPTIMIZER ENGINE
+// ============================================
+model SeoOnPageOptimization {
+  id                String   @id @default(cuid())
+  pageId            String
+  pageType          String
+  titleTag          String?
+  metaDescription   String?
+  h1Tag             String?
+  h2Tags            String?  // JSON array
+  h3Tags            String?  // JSON array
+  keywordDensity    Float    @default(0.0)
+  schemaMarkup      String?  // JSON-LD schema
+  optimizationScore Float    @default(0.0) // 0-100
+  lastOptimizedAt   DateTime @default(now())
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@unique([pageId, pageType])
+  @@index([optimizationScore])
+  @@index([lastOptimizedAt])
+}
+
+model SeoOptimizationLog {
+  id                String   @id @default(cuid())
+  pageId            String
+  pageType          String
+  optimizationType  String   // title, meta, h1, h2, h3, schema, keyword_density
+  oldValue          String?
+  newValue          String?
+  reason            String?
+  createdAt         DateTime @default(now())
+
+  @@index([pageId, pageType])
+  @@index([optimizationType])
+  @@index([createdAt])
+}
+
+// ============================================
+// 4. AUTO BLOG POSTING ENGINE
+// ============================================
+model SeoBlogQueue {
+  id                String   @id @default(cuid())
+  keyword           String
+  searchIntent      String   // informational, commercial, transactional
+  targetKeyword     String
+  status            String   @default("pending") // pending, processing, published, failed
+  scheduledAt       DateTime?
+  publishedAt       DateTime?
+  blogId            String?
+  indexingStatus    String?  // pending, submitted, indexed, failed
+  indexingSubmittedAt DateTime?
+  indexingIndexedAt   DateTime?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@index([status])
+  @@index([scheduledAt])
+  @@index([keyword])
+}
+
+// ============================================
+// 5. SITEMAP & INDEXING ENGINE
+// ============================================
+model SeoSitemapEntry {
+  id                String   @id @default(cuid())
+  url               String   @unique
+  pageType          String
+  pageId            String
+  priority          Float    @default(0.5) // 0.0-1.0
+  changefreq        String   @default("weekly") // always, hourly, daily, weekly, monthly, yearly, never
+  lastmod           DateTime @default(now())
+  isActive          Boolean  @default(true)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@index([pageType, pageId])
+  @@index([priority])
+  @@index([isActive])
+  @@index([lastmod])
+}
+
+model SeoIndexingSubmission {
+  id                String   @id @default(cuid())
+  url               String
+  pageType          String
+  pageId            String
+  submissionType    String   // google_indexing_api, sitemap_ping
+  status            String   @default("pending") // pending, submitted, indexed, failed
+  submittedAt       DateTime?
+  indexedAt         DateTime?
+  errorMessage      String?
+  retryCount        Int      @default(0)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@index([url])
+  @@index([status])
+  @@index([submittedAt])
+  @@index([pageId, pageType])
+}
+
+// ============================================
+// 6. CRAWL HEALTH & TECHNICAL SEO ENGINE
+// ============================================
+model SeoCrawlIssue {
+  id                String   @id @default(cuid())
+  url               String
+  issueType         String   // 404, orphan_page, broken_link, redirect_chain, duplicate_content
+  severity          String   @default("medium") // low, medium, high, critical
+  status            String   @default("open") // open, fixing, fixed, ignored
+  description       String?
+  recommendation    String?
+  fixedAt           DateTime?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@index([url])
+  @@index([issueType])
+  @@index([status])
+  @@index([severity])
+}
+
+model SeoBrokenLink {
+  id                String   @id @default(cuid())
+  sourceUrl         String
+  targetUrl         String
+  linkType          String   // internal, external
+  anchorText        String?
+  status            String   @default("broken") // broken, fixed, ignored
+  fixedAt           DateTime?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@index([sourceUrl])
+  @@index([targetUrl])
+  @@index([status])
+}
+
+// ============================================
+// 7. CORE WEB VITALS ENGINE
+// ============================================
+model SeoWebVitals {
+  id                String   @id @default(cuid())
+  pageId            String
+  pageType          String
+  url               String
+  lcp               Float?   // Largest Contentful Paint (ms)
+  cls                Float?   // Cumulative Layout Shift
+  inp                Float?   // Interaction to Next Paint (ms)
+  fcp                Float?   // First Contentful Paint (ms)
+  ttfb               Float?   // Time to First Byte (ms)
+  mobileUsable       Boolean? @default(true)
+  mobileScore        Int?     // 0-100
+  overallScore       Int      @default(0) // 0-100
+  measuredAt         DateTime @default(now())
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@unique([pageId, pageType, measuredAt])
+  @@index([pageId, pageType])
+  @@index([overallScore])
+  @@index([measuredAt])
+}
+
+// ============================================
+// 8. AUTHORITY & STRUCTURE ENGINE
+// ============================================
+model SeoPageAuthority {
+  id                String   @id @default(cuid())
+  pageId            String
+  pageType          String
+  authorityScore    Float    @default(0.0) // 0-100
+  internalPageRank  Float    @default(0.0) // PageRank-like score
+  inboundLinks      Int      @default(0)
+  outboundLinks     Int      @default(0)
+  pageDepth         Int      @default(0) // Distance from homepage
+  isPillarPage      Boolean  @default(false)
+  clusterId         String?  // Cluster/pillar group
+  calculatedAt      DateTime @default(now())
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@unique([pageId, pageType])
+  @@index([authorityScore])
+  @@index([internalPageRank])
+  @@index([isPillarPage])
+  @@index([clusterId])
+}
+
+model SeoContentCluster {
+  id                String   @id @default(cuid())
+  clusterName       String
+  pillarPageId      String
+  pillarPageType    String
+  supportingPages   String?  // JSON array of page IDs
+  topicAuthority    Float    @default(0.0) // 0-100
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@unique([pillarPageId, pillarPageType])
+  @@index([clusterName])
+  @@index([topicAuthority])
+}
+
+// ============================================
+// SEO IMAGE INTELLIGENCE ENGINE
+// ============================================
+model SeoImageIntelligence {
+  id                String   @id @default(cuid())
+  pageId            String
+  pageType          String
+  imageUrl          String
+  imagePath         String   // Local path
+  filename          String
+  altText           String?
+  titleAttribute    String?
+  caption           String?
+  imageBrief        String?  // Generated brief for image
+  source            String   // generated, downloaded, uploaded
+  sourceUrl         String?  // Original source if downloaded
+  generationMethod  String?  // ai_generated, api_sourced, manual
+  generationPrompt  String?  // AI prompt if generated
+  relevanceScore    Float    @default(0.0) // 0-1
+  seoOptimized      Boolean  @default(false)
+  fileSize          Int?     // bytes
+  dimensions        String?  // width x height
+  compressed        Boolean  @default(false)
+  responsiveSizes   String?  // JSON array of sizes
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@unique([pageId, pageType, imageUrl])
+  @@index([pageId, pageType])
+  @@index([relevanceScore])
+  @@index([seoOptimized])
+}
+
+// ============================================
+// COMPREHENSIVE LOGGING SYSTEM
+// ============================================
+model SeoEngineLog {
+  id                String   @id @default(cuid())
+  engineName        String   // keyword, internal_link, onpage, blog, sitemap, crawl, web_vitals, authority, image
+  taskName          String
+  targetUrl         String?
+  pageId            String?
+  pageType          String?
+  keyword           String?
+  status            String   @default("running") // success, running, failed, warning
+  executionTime     Int?     // milliseconds
+  message           String?
+  errorMessage      String?
+  metadata          String?  // JSON
+  createdAt         DateTime @default(now())
+
+  @@index([engineName])
+  @@index([status])
+  @@index([createdAt])
+  @@index([pageId, pageType])
+  @@index([keyword])
+}
+
+model SeoEngineStatus {
+  id                String   @id @default(cuid())
+  engineName        String   @unique
+  isEnabled         Boolean  @default(true)
+  lastRunAt         DateTime?
+  nextRunAt         DateTime?
+  lastSuccessAt     DateTime?
+  lastFailureAt     DateTime?
+  successCount      Int      @default(0)
+  failureCount      Int      @default(0)
+  warningCount      Int      @default(0)
+  healthScore       Int      @default(100) // 0-100
+  avgExecutionTime  Int?     // milliseconds
+  lastErrorMessage  String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@index([isEnabled])
+  @@index([healthScore])
+  @@index([lastRunAt])
+}
+
+// ============================================
+// SCHEDULER & AUTOMATION
+// ============================================
+model SeoScheduledTask {
+  id                String   @id @default(cuid())
+  engineName       String
+  taskType         String
+  schedule         String   // cron expression
+  isActive         Boolean  @default(true)
+  lastRunAt        DateTime?
+  nextRunAt        DateTime?
+  runCount         Int      @default(0)
+  successCount     Int      @default(0)
+  failureCount     Int      @default(0)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@index([engineName])
+  @@index([isActive])
+  @@index([nextRunAt])
+}
+
+// ============================================
+// FAILSAFE & SELF-HEALING
+// ============================================
+model SeoEngineFailure {
+  id                String   @id @default(cuid())
+  engineName        String
+  taskName          String
+  failureCount      Int      @default(1)
+  lastFailureAt     DateTime @default(now())
+  errorMessage      String?
+  autoRetryAttempts Int      @default(0)
+  status            String   @default("active") // active, resolved, ignored
+  resolvedAt        DateTime?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@index([engineName])
+  @@index([status])
+  @@index([failureCount])
+}
+
+
+
+
+
+

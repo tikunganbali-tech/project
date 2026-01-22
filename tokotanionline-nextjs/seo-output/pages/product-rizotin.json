@@ -1,0 +1,58 @@
+{
+  "title": "Rizotin - Solusi Pertanian",
+  "description": "ZPT & nutrisi perangsang akar dan tunas, meningkatkan serapan hara dan pertumbuhan awal.",
+  "canonical": "http://localhost:3000/produk/rizotin",
+  "meta": {
+    "og:title": "Rizotin - Solusi Pertanian",
+    "og:description": "ZPT & nutrisi perangsang akar dan tunas, meningkatkan serapan hara dan pertumbuhan awal.",
+    "og:type": "website",
+    "og:image": "/images/RootStimulator.jpg",
+    "og:url": "http://localhost:3000/produk/rizotin"
+  },
+  "schema": [
+    {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": "Rizotin",
+      "description": "Tanaman lambat tumbuh karena akar kurang berkembang. Rizotin merangsang perakaran & tunas baru, meningkatkan penyerapan nutrisi.<br><br>ZPT & nutrisi perangsang akar dan tunas, meningkatkan serapan hara dan pertumbuhan awal. Produk ZPT berkualitas tinggi.  Keunggulan: Memperbanyak akar halus, mempercepat pemulihan stres, meningkatkan serapan pupuk..  Cara penggunaan: Kocor/semprot akar sesuai dosis, ulangi tiap 10–14 hari pada fase vegetatif atau setelah stres..  Produk pertanian terpercaya untuk hasil panen optimal. Dapatkan produk berkualitas dengan harga terbaik hanya di TOKO TANI ONLINE. Produk ZPT berkualitas tinggi.  Keunggulan: Memperbanyak akar halus, mempercepat pemulihan stres, meningkatkan serapan pupuk..  Cara penggunaan: Kocor/semprot akar sesuai dosis, ulangi tiap 10–14 hari pada fase vegetatif atau setelah stres..  Produk pertanian terpercaya untuk hasil panen optimal. Dapatkan produk berkualitas dengan harga terbaik hanya di TOKO TANI ONLINE.",
+      "image": "/images/RootStimulator.jpg",
+      "category": "ZPT",
+      "offers": {
+        "@type": "Offer",
+        "price": 49000,
+        "priceCurrency": "IDR",
+        "availability": "https://schema.org/InStock"
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Masalah apa yang diselesaikan produk ini?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Tanaman lambat tumbuh karena akar kurang berkembang. Rizotin merangsang perakaran & tunas baru, meningkatkan penyerapan nutrisi."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Bagaimana cara aplikasi dan dosis produk ini?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Kocor/semprot akar sesuai dosis, ulangi tiap 10–14 hari pada fase vegetatif atau setelah stres. 1–2 ml per liter air untuk kocor/semprot akar."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Apa catatan keamanan produk ini?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Simpan sejuk & kering, kocok sebelum pakai, hindari overdosis."
+          }
+        }
+      ]
+    }
+  ]
+}

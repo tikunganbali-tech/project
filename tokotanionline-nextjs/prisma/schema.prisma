@@ -1,0 +1,3766 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Brand {
+  id                String            @id @default(cuid())
+  brandName         String            @unique
+  brandSlug         String            @unique
+  brandStatus       String            @default("ACTIVE")
+  domain            String?
+  subdomain         String?
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+  aiContentQueues   AIContentQueue[]
+  adCampaigns       AdCampaign[]
+  adCreatives       AdCreative[]
+  admins            Admin[]
+  blogs             Blog[]
+  blogCategories    BlogCategory[]
+  blogPosts         BlogPost[]
+  contentVersions   ContentVersion[]
+  locales           Locale[]
+  partnerScopes     PartnerScope[]
+  products          Product[]
+  productCategories ProductCategory[]
+  categories        Category[]        // PHASE 1: Universal Category Core
+  seoMetadata       SeoMetadata[]
+
+  @@index([brandSlug])
+  @@index([brandStatus])
+  @@index([domain])
+  @@index([subdomain])
+}
+
+model Locale {
+  id              String           @id @default(cuid())
+  brandId         String
+  localeCode      String
+  languageName    String
+  isDefault       Boolean          @default(false)
+  isActive        Boolean          @default(true)
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  aiContentQueues AIContentQueue[]
+  adCampaigns     AdCampaign[]
+  adCreatives     AdCreative[]
+  blogs           Blog[]
+  contentVersions ContentVersion[]
+  brand           Brand            @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  partnerScopes   PartnerScope[]
+  products        Product[]
+  seoMetadata     SeoMetadata[]
+
+  @@unique([brandId, localeCode])
+  @@index([brandId])
+  @@index([localeCode])
+  @@index([isDefault])
+}
+
+model Admin {
+  id                  String                    @id @default(cuid())
+  email               String                    @unique
+  passwordHash        String
+  name                String
+  role                String                    @default("content_admin")
+  createdAt           DateTime                  @default(now())
+  updatedAt           DateTime                  @updatedAt
+  isActive            Boolean                   @default(true)
+  lastLogin           DateTime?
+  brandId             String?
+  brand               Brand?                    @relation(fields: [brandId], references: [id])
+  passwordResetTokens AdminPasswordResetToken[]
+  auditLogs           AuditLog[]
+  approvedBlogPosts   BlogPost[]                @relation("BlogPostApprover")
+  blogPosts           BlogPost[]                @relation("BlogPostAuthor")
+  approvedProducts    Product[]                 @relation("ProductApprover")
+
+  @@index([brandId])
+}
+
+model AdminPasswordResetToken {
+  id                 String    @id @default(cuid())
+  adminId            String
+  tokenHash          String    @unique
+  expiresAt          DateTime
+  usedAt             DateTime?
+  createdAt          DateTime  @default(now())
+  requestedIpHash    String?
+  requestedUserAgent String?
+  admin              Admin     @relation(fields: [adminId], references: [id], onDelete: Cascade)
+
+  @@index([adminId, expiresAt])
+  @@index([tokenHash, expiresAt])
+}
+
+model AdminPasswordResetAttempt {
+  id        String   @id @default(cuid())
+  emailHash String
+  ipHash    String
+  createdAt DateTime @default(now())
+
+  @@index([emailHash, createdAt])
+  @@index([ipHash, createdAt])
+}
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  action     String
+  entityType String
+  entityId   String
+  userId     String
+  metadata   Json?
+  createdAt  DateTime @default(now())
+  user       Admin    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([action])
+  @@index([entityType, entityId])
+  @@index([userId])
+  @@index([createdAt])
+}
+
+model SiteSettings {
+  id                       String   @id @default(cuid())
+  logoUrl                  String?
+  primaryColor             String   @default("#16a34a")
+  secondaryColor           String   @default("#15803d")
+  fontFamily               String   @default("Inter")
+  heroEnabled              Boolean  @default(true)
+  ctaEnabled               Boolean  @default(true)
+  testimonialsEnabled      Boolean  @default(true)
+  socialProofEnabled       Boolean  @default(true)
+  homepageBlocks           String?
+  createdAt                DateTime @default(now())
+  updatedAt                DateTime @updatedAt
+  aboutMission             String?
+  aboutStats               String?
+  aboutStory               String?
+  aboutSubtitle            String?
+  aboutTitle               String?
+  aboutValues              String?
+  blogSubtitle             String?
+  blogTitle                String?
+  contactAddress           String?
+  contactEmail             String?
+  contactHours             String?
+  contactPhone             String?
+  contactSubtitle          String?
+  contactTitle             String?
+  ctaButtonText            String?
+  ctaSubtitle              String?
+  ctaTitle                 String?
+  featuredProductsSubtitle String?
+  featuredProductsTitle    String?
+  features                 String?
+  featuresTitle            String?
+  footerAbout              String?
+  footerAddress            String?
+  footerEmail              String?
+  footerPhone              String?
+  footerSocialMedia        String?
+  heroBackgroundImage      String?
+  heroCta2Text             String?
+  heroCtaText              String?
+  heroSubtitle             String?
+  heroTitle                String?
+  marketplaceSubtitle      String?
+  marketplaceTitle         String?
+  problemContent           String?
+  problemItems             String?
+  problemSubtitle          String?
+  problemTitle             String?
+  shopeeUrl                String?
+  tokopediaUrl             String?
+  trustItems               String?
+  faviconUrl               String?
+  facebookPixelId          String?
+  googleAdsId              String?
+  googleAnalyticsId        String?
+  tiktokPixelId            String?
+  aboutContent             String?
+  contactContent           String?
+  favicon                  String?
+  footerText               String?
+  logoDark                 String?
+  logoLight                String?
+  showFeaturedProducts     Boolean  @default(true)
+  showLatestPosts          Boolean  @default(true)
+  siteTitle                String?
+  tagline                  String?
+  defaultMetaDescription   String?
+  defaultMetaTitle         String?
+  valueProps               String?
+  valuePropsTitle          String?
+  phaseFSocialProofEnabled Boolean  @default(false)
+  salesEnabled             Boolean  @default(false)
+}
+
+model ProductCategory {
+  id                  String            @id @default(cuid())
+  name                String
+  slug                String
+  description         String?
+  imageUrl            String?
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @updatedAt
+  parentId            String?
+  brandId             String
+  seoDescription      String?
+  seoTitle            String?
+  type                CategoryType      @default(PRODUCT)
+  localSeoPages       LocalSeoPage[]
+  products            Product[]
+  subCategoryProducts Product[]         @relation("ProductSubCategory")
+  brand               Brand             @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  parent              ProductCategory?  @relation("CategoryHierarchy", fields: [parentId], references: [id])
+  children            ProductCategory[] @relation("CategoryHierarchy")
+
+  @@unique([brandId, slug, type])
+  @@index([parentId])
+  @@index([brandId])
+  @@index([type])
+  @@index([slug, type])
+}
+
+model Product {
+  id                String                  @id @default(cuid())
+  name              String
+  slug              String                  @unique
+  categoryId        String
+  description       String
+  shortDescription  String?
+  price             Float
+  discountPrice     Float?
+  stock             Int                     @default(0)
+  unit              String                  @default("pcs")
+  imageUrl          String?
+  images            String?
+  isFeatured        Boolean                 @default(false)
+  isActive          Boolean                 @default(true)
+  metaTitle         String?
+  metaDescription   String?
+  metaKeywords      String?
+  shopeeUrl         String?
+  tokopediaUrl      String?
+  features          String?
+  seoSchema         String?
+  createdAt         DateTime                @default(now())
+  updatedAt         DateTime                @updatedAt
+  activeIngredients String?
+  advantages        String?
+  applicationMethod String?
+  badge             String                  @default("none")
+  cropType          String?
+  dosage            String?
+  marketplaceCta    String?
+  packagingVariants String?
+  pestTargets       String?
+  problemSolution   String?
+  safetyNotes       String?
+  salesWeight       Int                     @default(0)
+  scarcityText      String?
+  usageStage        String?
+  whatsappCta       String?
+  priority          Int                     @default(0)
+  promotedAt        DateTime?
+  attributes        Json?
+  basePrice         Float?
+  status            String?
+  subCategoryId     String?
+  approvedAt        DateTime?
+  approvedBy        String?
+  scheduledAt       DateTime?
+  brandId           String
+  localeId          String
+  publishedAt       DateTime?
+  publishSource     String?          // M-08: "MANUAL" | "SCHEDULER"
+  schedulerKeywordId String?         // M-08: Link to ScheduleKeyword for PROCESSING check
+  sku               String?
+  specifications    String?
+  unifiedCategoryId String?                 // PHASE 1: Universal Category Core (optional during migration)
+  blogProducts      BlogProduct[]
+  approver          Admin?                  @relation("ProductApprover", fields: [approvedBy], references: [id])
+  brand             Brand                   @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  category          ProductCategory         @relation(fields: [categoryId], references: [id])
+  unifiedCategory   Category?               @relation("ProductToCategory", fields: [unifiedCategoryId], references: [id])
+  locale            Locale                  @relation(fields: [localeId], references: [id], onDelete: Cascade)
+  subCategory       ProductCategory?        @relation("ProductSubCategory", fields: [subCategoryId], references: [id])
+  productImages     ProductImage[]
+  wholesalePrices   ProductWholesalePrice[]
+
+  @@unique([brandId, localeId, slug])
+  @@index([categoryId, isActive])
+  @@index([badge, salesWeight])
+  @@index([status])
+  @@index([status, publishedAt])
+  @@index([subCategoryId])
+  @@index([scheduledAt])
+  @@index([approvedBy])
+  @@index([brandId])
+  @@index([localeId])
+  @@index([sku, brandId])
+}
+
+model ProductImage {
+  id           String   @id @default(cuid())
+  productId    String
+  url          String
+  alt          String?
+  isPrimary    Boolean  @default(false)
+  displayOrder Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  product      Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId, isPrimary])
+  @@index([productId, displayOrder])
+}
+
+model ProductWholesalePrice {
+  id        String   @id @default(cuid())
+  productId String
+  minQty    Int
+  price     Float
+  createdAt DateTime @default(now())
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
+  @@index([productId, minQty])
+}
+
+model BrandEntity {
+  id               String          @id @default(cuid())
+  brandName        String          @unique
+  brandDescription String
+  brandCategory    String
+  brandMission     String?
+  brandVision      String?
+  brandStory       String?
+  expertiseAreas   String?
+  trustSignals     String?
+  sameAs           String?
+  officialWebsite  String?
+  logoUrl          String?
+  foundingDate     DateTime?
+  entityStrength   String          @default("growing")
+  schemaCoverage   Int             @default(0)
+  mentionCount     Int             @default(0)
+  consistencyScore Int             @default(100)
+  isActive         Boolean         @default(true)
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+  authorProfiles   AuthorEntity[]  @relation("AuthorToBrand")
+  entityMentions   EntityMention[]
+  entitySchemas    EntitySchema[]
+
+  @@index([brandName])
+  @@index([entityStrength])
+  @@index([isActive])
+}
+
+model AuthorEntity {
+  id              String       @id @default(cuid())
+  authorName      String
+  authorSlug      String       @unique
+  bio             String?
+  expertise       String?
+  credentials     String?
+  experience      String?
+  profileImageUrl String?
+  email           String?
+  website         String?
+  socialProfiles  String?
+  trustScore      Int          @default(80)
+  articleCount    Int          @default(0)
+  topicRelevance  String?
+  brandEntityId   String?
+  isActive        Boolean      @default(true)
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  brandEntity     BrandEntity? @relation("AuthorToBrand", fields: [brandEntityId], references: [id])
+  articles        Blog[]       @relation("BlogToAuthor")
+
+  @@index([authorName])
+  @@index([authorSlug])
+  @@index([brandEntityId])
+  @@index([isActive])
+}
+
+model BlogCategory {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  brandId     String
+  brand       Brand    @relation(fields: [brandId], references: [id], onDelete: Cascade)
+
+  @@unique([brandId, slug])
+  @@index([brandId])
+}
+
+model Blog {
+  id               String        @id @default(cuid())
+  title            String
+  slug             String        @unique
+  excerpt          String
+  content          String
+  author           String        @default("Admin")
+  categoryId       String?
+  imageUrl         String?
+  status           String        @default("draft")
+  publishedAt      DateTime?
+  scheduledAt      DateTime?
+  metaTitle        String?
+  metaDescription  String?
+  metaKeywords     String?
+  faqSchema        String?
+  breadcrumbSchema String?
+  articleSchema    String?
+  isAIGenerated    Boolean       @default(false)
+  aiPrompt         String?
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  isPillarPage     Boolean       @default(false)
+  authorEntityId   String?
+  brandId          String
+  localeId         String
+  authorEntity     AuthorEntity? @relation("BlogToAuthor", fields: [authorEntityId], references: [id])
+  brand            Brand         @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  locale           Locale        @relation(fields: [localeId], references: [id], onDelete: Cascade)
+  unifiedCategoryId String?                 // PHASE 1: Universal Category Core (optional during migration)
+  blogProducts     BlogProduct[]
+  tags             BlogTag[]     @relation("BlogToBlogTag")
+  unifiedCategory  Category?     @relation("BlogToCategory", fields: [unifiedCategoryId], references: [id])
+  relatedProductIds Json?                  // PRODUCT-AWARE: Array of product IDs related to this blog
+  keywordTree      Json?                    // PRODUCT-AWARE: Keyword tree structure (primary, secondary, long-tail)
+  intentType       String?                  // PRODUCT-AWARE: Search intent type (cara, panduan, tips, rekomendasi, perbandingan, solusi)
+  
+  @@unique([brandId, localeId, slug])
+  @@index([status, publishedAt])
+  @@index([authorEntityId])
+  @@index([brandId])
+  @@index([localeId])
+  @@index([categoryId])
+  @@index([unifiedCategoryId])
+}
+
+model Post {
+  id        String   @id @default(cuid())
+  title     String
+  slug      String   @unique
+  content   String
+  published Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model CatalogProduct {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  description String
+  price       Int
+  published   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+}
+
+model ContentVersion {
+  id               String   @id @default(cuid())
+  entityType       String
+  entityId         String
+  versionType      String
+  intentType       String?
+  content          String
+  title            String?
+  excerpt          String?
+  changes          String?
+  changeReason     String?
+  modifiedSections String[]
+  wordCountBefore  Int?
+  wordCountAfter   Int?
+  improvementScore Float?
+  appliedAt        DateTime @default(now())
+  appliedBy        String?
+  isActive         Boolean  @default(false)
+  createdAt        DateTime @default(now())
+  brandId          String
+  localeId         String
+  brand            Brand    @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  locale           Locale   @relation(fields: [localeId], references: [id], onDelete: Cascade)
+
+  @@unique([entityType, entityId, brandId, localeId, versionType])
+  @@index([entityType, entityId])
+  @@index([intentType])
+  @@index([isActive])
+  @@index([appliedAt])
+  @@index([brandId])
+  @@index([localeId])
+}
+
+model BlogTag {
+  id    String @id @default(cuid())
+  name  String @unique
+  slug  String @unique
+  blogs Blog[] @relation("BlogToBlogTag")
+}
+
+model BlogProduct {
+  id        String   @id @default(cuid())
+  blogId    String
+  productId String
+  createdAt DateTime @default(now())
+  blog      Blog     @relation(fields: [blogId], references: [id], onDelete: Cascade)
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([blogId, productId])
+}
+
+model WhatsAppAdmin {
+  id         String    @id @default(cuid())
+  name       String
+  phone      String    @unique
+  isActive   Boolean   @default(true)
+  clickCount Int       @default(0)
+  lastUsed   DateTime?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+}
+
+model AIContentQueue {
+  id          String    @id @default(cuid())
+  keyword     String
+  status      String    @default("pending")
+  articleId   String?
+  prompt      String?
+  settings    String?
+  error       String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  completedAt DateTime?
+  brandId     String
+  localeId    String
+  brand       Brand     @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  locale      Locale    @relation(fields: [localeId], references: [id], onDelete: Cascade)
+
+  @@index([status, createdAt])
+  @@index([brandId])
+  @@index([localeId])
+}
+
+model AIContentSettings {
+  id               String   @id @default(cuid())
+  keywords         String?
+  articlesPerDay   Int      @default(3)
+  wordCount        Int      @default(1500)
+  tone             String   @default("expert_farmer")
+  imageSource      String   @default("generate")
+  autoSEO          Boolean  @default(true)
+  autoInternalLink Boolean  @default(true)
+  autoProductEmbed Boolean  @default(true)
+  cronSchedule     String   @default("0 8,14,20 * * *")
+  isActive         Boolean  @default(true)
+  updatedAt        DateTime @updatedAt
+  publishTimes     String?
+  seoSyncDelay     Int      @default(300)
+}
+
+model ImageServiceAPIKey {
+  id                 String    @id @default(cuid())
+  serviceName        String    @unique
+  apiKey             String
+  isActive           Boolean   @default(true)
+  usageCount         Int       @default(0)
+  lastUsedAt         DateTime?
+  rateLimitRemaining Int?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+
+  @@index([serviceName, isActive])
+}
+
+model SocialProofLog {
+  id        String   @id @default(cuid())
+  message   String
+  location  String?
+  productId String?
+  timestamp DateTime @default(now())
+}
+
+model Location {
+  id            String         @id @default(cuid())
+  name          String
+  type          String         @default("city")
+  latitude      Float
+  longitude     Float
+  province      String?
+  isActive      Boolean        @default(true)
+  displayOrder  Int            @default(0)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  localSeoPages LocalSeoPage[]
+
+  @@index([latitude, longitude])
+  @@index([isActive, displayOrder])
+}
+
+model VisitorCache {
+  id             String   @id @default(cuid())
+  sessionId      String   @unique
+  ipAddress      String?
+  country        String?
+  city           String?
+  viewedProducts String?
+  preferences    String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model TrackingEvent {
+  id        String   @id @default(cuid())
+  eventType String
+  productId String?
+  blogId    String?
+  metadata  String?
+  createdAt DateTime @default(now())
+}
+
+model ProductStats {
+  id              String   @id @default(cuid())
+  productId       String   @unique
+  views           Int      @default(0)
+  clicksWa        Int      @default(0)
+  clicksShopee    Int      @default(0)
+  clicksTokopedia Int      @default(0)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model SeoMetadata {
+  id              String   @id @default(cuid())
+  entityType      String
+  entityId        String
+  metaTitle       String?
+  metaDescription String?
+  metaKeywords    String?
+  schemaJson      String?
+  canonicalUrl    String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  brandId         String
+  localeId        String?
+  brand           Brand    @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  locale          Locale?  @relation(fields: [localeId], references: [id], onDelete: Cascade)
+
+  @@unique([entityType, entityId, brandId])
+  @@index([entityType])
+  @@index([brandId])
+  @@index([localeId])
+}
+
+model AutomationJob {
+  id        String          @id @default(cuid())
+  name      String
+  type      String
+  schedule  String
+  isActive  Boolean         @default(true)
+  status    String          @default("idle")
+  lastRunAt DateTime?
+  nextRunAt DateTime?
+  config    String?
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+  logs      AutomationLog[]
+
+  @@unique([name, type])
+}
+
+model AutomationLog {
+  id         String        @id @default(cuid())
+  jobId      String
+  status     String
+  message    String?
+  error      String?
+  startedAt  DateTime      @default(now())
+  finishedAt DateTime?
+  meta       String?
+  job        AutomationJob @relation(fields: [jobId], references: [id], onDelete: Cascade)
+}
+
+model SeoEntity {
+  id                 String         @id @default(cuid())
+  entityType         String
+  entityId           String
+  primaryKeyword     String
+  secondaryKeywords  String?
+  longTailVariations String?
+  searchIntent       String         @default("commercial")
+  relatedEntityIds   String?
+  authorityScore     Float          @default(0.0)
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @updatedAt
+  internalLinks      InternalLink[] @relation("sourceEntity")
+  targetLinks        InternalLink[] @relation("targetEntity")
+  keywords           SeoKeyword[]
+
+  @@unique([entityType, entityId])
+  @@index([entityType, authorityScore])
+  @@index([primaryKeyword])
+  @@index([searchIntent])
+}
+
+model SeoKeyword {
+  id           String    @id @default(cuid())
+  keyword      String
+  entityId     String
+  keywordType  String
+  searchVolume Int       @default(0)
+  difficulty   Float     @default(0.0)
+  intent       String    @default("commercial")
+  clusterId    String?
+  createdAt    DateTime  @default(now())
+  entity       SeoEntity @relation(fields: [entityId], references: [id], onDelete: Cascade)
+
+  @@unique([keyword, entityId])
+  @@index([keyword])
+  @@index([entityId])
+  @@index([clusterId])
+}
+
+model InternalLink {
+  id              String    @id @default(cuid())
+  sourceEntityId  String
+  targetEntityId  String
+  anchorText      String
+  context         String?
+  linkType        String    @default("contextual")
+  position        Int?
+  isAutoGenerated Boolean   @default(true)
+  createdAt       DateTime  @default(now())
+  sourceEntity    SeoEntity @relation("sourceEntity", fields: [sourceEntityId], references: [id], onDelete: Cascade)
+  targetEntity    SeoEntity @relation("targetEntity", fields: [targetEntityId], references: [id], onDelete: Cascade)
+
+  @@unique([sourceEntityId, targetEntityId])
+  @@index([sourceEntityId])
+  @@index([targetEntityId])
+  @@index([linkType])
+}
+
+model ProgrammaticPage {
+  id              String   @id @default(cuid())
+  slug            String   @unique
+  title           String
+  keyword         String
+  keywordCluster  String?
+  content         String
+  metaTitle       String?
+  metaDescription String?
+  schemaJson      String?
+  isIndexed       Boolean  @default(true)
+  priority        Float    @default(0.5)
+  internalLinks   String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([keyword])
+  @@index([isIndexed, priority])
+}
+
+model ContentExpansion {
+  id              String   @id @default(cuid())
+  entityType      String
+  entityId        String
+  expansionType   String
+  content         String
+  keywords        String?
+  isAutoGenerated Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@unique([entityType, entityId, expansionType])
+  @@index([entityType, entityId])
+}
+
+model SeoHealthIssue {
+  id            String    @id @default(cuid())
+  issueType     String
+  entityType    String?
+  entityId      String?
+  severity      String    @default("medium")
+  message       String
+  fixSuggestion String?
+  isResolved    Boolean   @default(false)
+  detectedAt    DateTime  @default(now())
+  resolvedAt    DateTime?
+
+  @@index([issueType, isResolved])
+  @@index([severity, isResolved])
+  @@index([entityType, entityId])
+}
+
+model FailureMemory {
+  id                 String                  @id @default(cuid())
+  failureType        String
+  entityType         String?
+  entityId           String?
+  title              String?
+  cta                String?
+  contentStructure   String?
+  keywordCluster     String?
+  pageType           String?
+  impressions        Int                     @default(0)
+  truthScore         Float?
+  conversions        Int                     @default(0)
+  avgTruthScore      Float?
+  totalVisits        Int                     @default(0)
+  failureReason      String
+  failureDetails     Json?
+  blockReuseAttempts Int                     @default(0)
+  lastBlockAttempt   DateTime?
+  detectedAt         DateTime                @default(now())
+  lastSeenAt         DateTime                @default(now())
+  isActive           Boolean                 @default(true)
+  blockLogs          FailureMemoryBlockLog[]
+
+  @@index([failureType])
+  @@index([entityType, entityId])
+  @@index([keywordCluster])
+  @@index([pageType])
+  @@index([isActive, detectedAt])
+}
+
+model FailureMemoryBlockLog {
+  id                        String        @id @default(cuid())
+  failureMemoryId           String
+  attemptedTitle            String?
+  attemptedCTA              String?
+  attemptedContentStructure String?
+  attemptedKeywordCluster   String?
+  attemptedPageType         String?
+  blockedBy                 String
+  blockReason               String
+  similarityScore           Float?
+  context                   Json?
+  blockedAt                 DateTime      @default(now())
+  failureMemory             FailureMemory @relation(fields: [failureMemoryId], references: [id], onDelete: Cascade)
+
+  @@index([failureMemoryId])
+  @@index([blockedBy])
+  @@index([blockedAt])
+}
+
+model CrawlPriority {
+  id             String    @id @default(cuid())
+  url            String    @unique
+  entityType     String?
+  entityId       String?
+  priority       Float     @default(0.5)
+  lastCrawled    DateTime?
+  crawlFrequency String    @default("daily")
+  shouldIndex    Boolean   @default(true)
+  linkDepth      Int       @default(0)
+  authorityScore Float     @default(0.0)
+  updatedAt      DateTime  @updatedAt
+
+  @@index([priority, shouldIndex])
+  @@index([lastCrawled])
+}
+
+model ContentDistribution {
+  id          String    @id @default(cuid())
+  articleId   String
+  channel     String
+  status      String    @default("pending")
+  url         String?
+  utmSource   String?
+  utmMedium   String?
+  utmCampaign String?
+  metadata    String?
+  error       String?
+  createdAt   DateTime  @default(now())
+  publishedAt DateTime?
+
+  @@index([articleId, channel])
+  @@index([status, createdAt])
+}
+
+model UserBehavior {
+  id          String   @id @default(cuid())
+  sessionId   String
+  pageType    String
+  pageId      String
+  scrollDepth Int      @default(0)
+  timeOnPage  Int      @default(0)
+  ctaClicks   Int      @default(0)
+  exitIntent  Boolean  @default(false)
+  metadata    String?
+  createdAt   DateTime @default(now())
+
+  @@index([pageType, pageId])
+  @@index([sessionId])
+  @@index([createdAt])
+}
+
+model AuthorProfile {
+  id           String   @id @default(cuid())
+  name         String   @unique
+  bio          String?
+  expertise    String?
+  credentials  String?
+  profileImage String?
+  socialLinks  String?
+  trustSignals String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([name])
+}
+
+model LocalSeoPage {
+  id              String           @id @default(cuid())
+  slug            String           @unique
+  title           String
+  locationId      String
+  categoryId      String?
+  content         String
+  metaTitle       String?
+  metaDescription String?
+  schemaJson      String?
+  isIndexed       Boolean          @default(true)
+  priority        Float            @default(0.7)
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  category        ProductCategory? @relation(fields: [categoryId], references: [id])
+  location        Location         @relation(fields: [locationId], references: [id])
+
+  @@index([locationId, categoryId])
+  @@index([isIndexed, priority])
+}
+
+model ContentRefresh {
+  id            String    @id @default(cuid())
+  entityType    String
+  entityId      String
+  lastRefreshed DateTime?
+  nextRefresh   DateTime
+  refreshCount  Int       @default(0)
+  changes       String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@unique([entityType, entityId])
+  @@index([nextRefresh])
+}
+
+model Subscriber {
+  id             String    @id @default(cuid())
+  email          String?   @unique
+  phone          String?   @unique
+  type           String    @default("whatsapp")
+  preferences    String?
+  isActive       Boolean   @default(true)
+  subscribedAt   DateTime  @default(now())
+  unsubscribedAt DateTime?
+
+  @@index([type, isActive])
+}
+
+model RepeatVisitor {
+  id          String   @id @default(cuid())
+  sessionId   String
+  visitCount  Int      @default(1)
+  firstVisit  DateTime @default(now())
+  lastVisit   DateTime @default(now())
+  pagesViewed String?
+  totalTime   Int      @default(0)
+  metadata    String?
+
+  @@index([sessionId])
+  @@index([lastVisit])
+}
+
+model Session {
+  id             String        @id @default(cuid())
+  startedAt      DateTime      @default(now())
+  lastActivityAt DateTime      @default(now())
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  sessionPages   SessionPage[]
+
+  @@index([lastActivityAt])
+}
+
+model SessionPage {
+  id        String   @id @default(cuid())
+  sessionId String
+  pageType  String
+  pageId    String?
+  pageUrl   String
+  visitedAt DateTime @default(now())
+  session   Session  @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  @@index([sessionId])
+  @@index([visitedAt])
+}
+
+model IndexPingLog {
+  id         String   @id @default(cuid())
+  sitemapUrl String
+  status     String   @default("success")
+  error      String?
+  pingedAt   DateTime @default(now())
+
+  @@index([pingedAt])
+  @@index([status])
+}
+
+model EngineLog {
+  id                 String   @id @default(cuid())
+  engineName         String
+  moduleName         String?
+  actionType         String
+  relatedEntityId    String?
+  relatedEntityType  String?
+  status             String
+  message            String
+  metadata           String?
+  executedAt         DateTime @default(now())
+  executionTime      Int?
+  error              String?
+  dataProcessedCount Int      @default(0)
+
+  @@index([engineName, executedAt])
+  @@index([status, executedAt])
+  @@index([relatedEntityType, relatedEntityId])
+  @@index([executedAt])
+}
+
+model EngineHealth {
+  id                 String    @id @default(cuid())
+  engineName         String    @unique
+  status             String    @default("healthy")
+  lastRunAt          DateTime?
+  lastSuccessAt      DateTime?
+  lastFailureAt      DateTime?
+  successCount       Int       @default(0)
+  warningCount       Int       @default(0)
+  failureCount       Int       @default(0)
+  errorRate          Float     @default(0.0)
+  avgExecutionTime   Int?
+  lastError          String?
+  metadata           String?
+  updatedAt          DateTime  @updatedAt
+  isActive           Boolean   @default(true)
+  lastDataProcessed  Int       @default(0)
+  lastResult         String?
+  totalDataProcessed Int       @default(0)
+  autoFixApplied     Boolean   @default(false)
+  autoFixCount       Int       @default(0)
+  autoFixSuccess     Boolean?
+  lastAutoFixAt      DateTime?
+  lastAutoFixType    String?
+
+  @@index([status])
+  @@index([isActive])
+  @@index([lastRunAt])
+  @@index([autoFixApplied])
+}
+
+model EngineAlert {
+  id             String    @id @default(cuid())
+  engineName     String
+  alertType      String
+  title          String
+  message        String
+  status         String    @default("active")
+  acknowledgedAt DateTime?
+  resolvedAt     DateTime?
+  metadata       String?
+  createdAt      DateTime  @default(now())
+
+  @@index([engineName, status])
+  @@index([alertType, status])
+  @@index([createdAt])
+}
+
+model DataHandoff {
+  id              String   @id @default(cuid())
+  handoffId       String   @unique
+  handoffType     String
+  direction       String
+  sourceSubsystem String
+  targetSubsystem String
+  sourcePageId    String?
+  sourcePageType  String?
+  dataType        String
+  recordCount     Int      @default(0)
+  metadata        String?
+  handoffAt       DateTime @default(now())
+
+  @@index([handoffType, direction])
+  @@index([sourceSubsystem, targetSubsystem])
+  @@index([sourcePageId, sourcePageType])
+  @@index([handoffAt])
+}
+
+model SeoKeywordMapping {
+  id             String   @id @default(cuid())
+  pageId         String
+  pageType       String
+  keyword        String
+  keywordType    String
+  keywordDensity Float    @default(0.0)
+  position       Int?
+  usageCount     Int      @default(1)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@unique([pageId, pageType, keyword, keywordType])
+  @@index([pageId, pageType])
+  @@index([keyword])
+  @@index([keywordType])
+}
+
+model SeoInternalLink {
+  id             String   @id @default(cuid())
+  sourcePageId   String
+  sourcePageType String
+  targetPageId   String
+  targetPageType String
+  anchorText     String
+  anchorKeyword  String?
+  position       Int?
+  isContextual   Boolean  @default(true)
+  relevanceScore Float    @default(0.0)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([sourcePageId, sourcePageType])
+  @@index([targetPageId, targetPageType])
+  @@index([anchorKeyword])
+}
+
+model SeoOnPageOptimization {
+  id                String   @id @default(cuid())
+  pageId            String
+  pageType          String
+  titleTag          String?
+  metaDescription   String?
+  h1Tag             String?
+  h2Tags            String?
+  h3Tags            String?
+  keywordDensity    Float    @default(0.0)
+  schemaMarkup      String?
+  optimizationScore Float    @default(0.0)
+  lastOptimizedAt   DateTime @default(now())
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@unique([pageId, pageType])
+  @@index([optimizationScore])
+  @@index([lastOptimizedAt])
+}
+
+model SeoOptimizationLog {
+  id               String   @id @default(cuid())
+  pageId           String
+  pageType         String
+  optimizationType String
+  oldValue         String?
+  newValue         String?
+  reason           String?
+  createdAt        DateTime @default(now())
+
+  @@index([pageId, pageType])
+  @@index([optimizationType])
+  @@index([createdAt])
+}
+
+model SeoBlogQueue {
+  id                  String    @id @default(cuid())
+  keyword             String
+  searchIntent        String
+  targetKeyword       String
+  status              String    @default("pending")
+  scheduledAt         DateTime?
+  publishedAt         DateTime?
+  blogId              String?
+  indexingStatus      String?
+  indexingSubmittedAt DateTime?
+  indexingIndexedAt   DateTime?
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+
+  @@index([status])
+  @@index([scheduledAt])
+  @@index([keyword])
+}
+
+model SeoSitemapEntry {
+  id         String   @id @default(cuid())
+  url        String   @unique
+  pageType   String
+  pageId     String
+  priority   Float    @default(0.5)
+  changefreq String   @default("weekly")
+  lastmod    DateTime @default(now())
+  isActive   Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([pageType, pageId])
+  @@index([priority])
+  @@index([isActive])
+  @@index([lastmod])
+}
+
+model SeoIndexingSubmission {
+  id             String    @id @default(cuid())
+  url            String
+  pageType       String
+  pageId         String
+  submissionType String
+  status         String    @default("pending")
+  submittedAt    DateTime?
+  indexedAt      DateTime?
+  errorMessage   String?
+  retryCount     Int       @default(0)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  @@index([url])
+  @@index([status])
+  @@index([submittedAt])
+  @@index([pageId, pageType])
+}
+
+model SeoCrawlIssue {
+  id             String    @id @default(cuid())
+  url            String
+  issueType      String
+  severity       String    @default("medium")
+  status         String    @default("open")
+  description    String?
+  recommendation String?
+  fixedAt        DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  @@unique([url, issueType])
+  @@index([url])
+  @@index([issueType])
+  @@index([status])
+  @@index([severity])
+}
+
+model SeoBrokenLink {
+  id         String    @id @default(cuid())
+  sourceUrl  String
+  targetUrl  String
+  linkType   String
+  anchorText String?
+  status     String    @default("broken")
+  fixedAt    DateTime?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  @@unique([sourceUrl, targetUrl])
+  @@index([sourceUrl])
+  @@index([targetUrl])
+  @@index([status])
+}
+
+model SeoWebVitals {
+  id           String   @id @default(cuid())
+  pageId       String
+  pageType     String
+  url          String
+  lcp          Float?
+  cls          Float?
+  inp          Float?
+  fcp          Float?
+  ttfb         Float?
+  mobileUsable Boolean? @default(true)
+  mobileScore  Int?
+  overallScore Int      @default(0)
+  measuredAt   DateTime @default(now())
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@unique([pageId, pageType, measuredAt])
+  @@index([pageId, pageType])
+  @@index([overallScore])
+  @@index([measuredAt])
+}
+
+model SeoPageAuthority {
+  id               String   @id @default(cuid())
+  pageId           String
+  pageType         String
+  authorityScore   Float    @default(0.0)
+  internalPageRank Float    @default(0.0)
+  inboundLinks     Int      @default(0)
+  outboundLinks    Int      @default(0)
+  pageDepth        Int      @default(0)
+  isPillarPage     Boolean  @default(false)
+  clusterId        String?
+  calculatedAt     DateTime @default(now())
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@unique([pageId, pageType])
+  @@index([authorityScore])
+  @@index([internalPageRank])
+  @@index([isPillarPage])
+  @@index([clusterId])
+}
+
+model SeoContentCluster {
+  id              String   @id @default(cuid())
+  clusterName     String
+  pillarPageId    String
+  pillarPageType  String
+  supportingPages String?
+  topicAuthority  Float    @default(0.0)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@unique([pillarPageId, pillarPageType])
+  @@index([clusterName])
+  @@index([topicAuthority])
+}
+
+model SeoImageIntelligence {
+  id               String   @id @default(cuid())
+  pageId           String
+  pageType         String
+  imageUrl         String
+  imagePath        String
+  filename         String
+  altText          String?
+  titleAttribute   String?
+  caption          String?
+  imageBrief       String?
+  source           String
+  sourceUrl        String?
+  generationMethod String?
+  generationPrompt String?
+  relevanceScore   Float    @default(0.0)
+  seoOptimized     Boolean  @default(false)
+  fileSize         Int?
+  dimensions       String?
+  compressed       Boolean  @default(false)
+  responsiveSizes  String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@unique([pageId, pageType, imageUrl])
+  @@index([pageId, pageType])
+  @@index([relevanceScore])
+  @@index([seoOptimized])
+}
+
+model UrlRedirect {
+  id         String   @id @default(cuid())
+  fromUrl    String   @unique
+  toUrl      String
+  statusCode Int      @default(301)
+  entityType String?
+  entityId   String?
+  isActive   Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([fromUrl])
+  @@index([entityType, entityId])
+  @@index([isActive])
+}
+
+model SeoEngineLog {
+  id            String   @id @default(cuid())
+  engineName    String
+  taskName      String
+  targetUrl     String?
+  pageId        String?
+  pageType      String?
+  keyword       String?
+  status        String   @default("running")
+  executionTime Int?
+  message       String?
+  errorMessage  String?
+  metadata      String?
+  createdAt     DateTime @default(now())
+
+  @@index([engineName])
+  @@index([status])
+  @@index([createdAt])
+  @@index([pageId, pageType])
+  @@index([keyword])
+}
+
+model SeoEngineStatus {
+  id               String    @id @default(cuid())
+  engineName       String    @unique
+  isEnabled        Boolean   @default(true)
+  lastRunAt        DateTime?
+  nextRunAt        DateTime?
+  lastSuccessAt    DateTime?
+  lastFailureAt    DateTime?
+  successCount     Int       @default(0)
+  failureCount     Int       @default(0)
+  warningCount     Int       @default(0)
+  healthScore      Int       @default(100)
+  avgExecutionTime Int?
+  lastErrorMessage String?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  @@index([isEnabled])
+  @@index([healthScore])
+  @@index([lastRunAt])
+}
+
+model SeoScheduledTask {
+  id           String    @id @default(cuid())
+  engineName   String
+  taskType     String
+  schedule     String
+  isActive     Boolean   @default(true)
+  lastRunAt    DateTime?
+  nextRunAt    DateTime?
+  runCount     Int       @default(0)
+  successCount Int       @default(0)
+  failureCount Int       @default(0)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@index([engineName])
+  @@index([isActive])
+  @@index([nextRunAt])
+}
+
+model SchedulerConfig {
+  id         String   @id @unique @default(cuid())
+  enabled    Boolean  @default(false)
+  timezone   String   @default("Asia/Jakarta")
+  dailyQuota Int      @default(3)
+  runWindows String[]
+  contentMix String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model SchedulerRun {
+  id            String    @id @default(cuid())
+  runId         String    @unique
+  date          DateTime  @default(now())
+  plannedCount  Int       @default(0)
+  executedCount Int       @default(0)
+  status        String
+  log           String?
+  startedAt     DateTime  @default(now())
+  finishedAt    DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@index([date])
+  @@index([status])
+  @@index([runId])
+}
+
+model SeoEngineFailure {
+  id                String    @id @default(cuid())
+  engineName        String
+  taskName          String
+  failureCount      Int       @default(1)
+  lastFailureAt     DateTime  @default(now())
+  errorMessage      String?
+  autoRetryAttempts Int       @default(0)
+  status            String    @default("active")
+  resolvedAt        DateTime?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  @@index([engineName])
+  @@index([status])
+  @@index([failureCount])
+}
+
+model MasterDecision {
+  id            String   @id @default(cuid())
+  pageId        String
+  pageType      String
+  decision      String
+  confidence    Int
+  reason        String?
+  analyticsData String?
+  engineScores  String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@unique([pageId, pageType])
+  @@index([pageId, pageType])
+  @@index([decision])
+  @@index([updatedAt])
+}
+
+model MasterDecisionLog {
+  id              String   @id @default(cuid())
+  pageId          String
+  pageType        String
+  decision        String
+  confidence      Int
+  reason          String?
+  enginesAffected String?
+  analyticsData   String?
+  engineScores    String?
+  createdAt       DateTime @default(now())
+
+  @@index([pageId, pageType])
+  @@index([decision])
+  @@index([createdAt])
+}
+
+model EntityMention {
+  id                String      @id @default(cuid())
+  brandEntityId     String
+  pageId            String
+  pageType          String
+  mentionType       String
+  mentionText       String?
+  context           String?
+  semanticRelevance Float       @default(0.5)
+  createdAt         DateTime    @default(now())
+  brandEntity       BrandEntity @relation(fields: [brandEntityId], references: [id], onDelete: Cascade)
+
+  @@index([brandEntityId])
+  @@index([pageId, pageType])
+  @@index([mentionType])
+}
+
+model EntitySchema {
+  id            String      @id @default(cuid())
+  brandEntityId String
+  pageId        String
+  pageType      String
+  schemaType    String
+  schemaData    String
+  isActive      Boolean     @default(true)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  brandEntity   BrandEntity @relation(fields: [brandEntityId], references: [id], onDelete: Cascade)
+
+  @@unique([pageId, pageType, schemaType])
+  @@index([brandEntityId])
+  @@index([pageId, pageType])
+  @@index([schemaType])
+}
+
+model TopicalAuthorityCluster {
+  id               String   @id @default(cuid())
+  topicName        String
+  topicSlug        String   @unique
+  topicDescription String?
+  pillarPageId     String?
+  pillarPageType   String?
+  supportingPages  String?
+  semanticDepth    Int      @default(0)
+  internalLinks    Int      @default(0)
+  authorityScore   Int      @default(0)
+  brandEntityId    String?
+  isActive         Boolean  @default(true)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@index([topicName])
+  @@index([topicSlug])
+  @@index([brandEntityId])
+  @@index([isActive])
+}
+
+model EntityLink {
+  id                String   @id @default(cuid())
+  sourcePageId      String
+  sourcePageType    String
+  targetPageId      String
+  targetPageType    String
+  linkType          String
+  anchorText        String?
+  semanticRelevance Float    @default(0.5)
+  brandEntityId     String?
+  createdAt         DateTime @default(now())
+
+  @@index([sourcePageId, sourcePageType])
+  @@index([targetPageId, targetPageType])
+  @@index([linkType])
+  @@index([brandEntityId])
+}
+
+model AnalyticsVisit {
+  id                       String   @id @default(cuid())
+  sessionId                String
+  ipAddress                String?
+  country                  String?
+  countryCode              String?
+  region                   String?
+  regionCode               String?
+  city                     String?
+  cityCode                 String?
+  district                 String?
+  districtCode             String?
+  subdistrict              String?
+  postalCode               String?
+  latitude                 Float?
+  longitude                Float?
+  timezone                 String?
+  deviceType               String?
+  deviceBrand              String?
+  deviceModel              String?
+  os                       String?
+  osVersion                String?
+  browser                  String?
+  browserVersion           String?
+  screenWidth              Int?
+  screenHeight             Int?
+  screenResolution         String?
+  isMobile                 Boolean  @default(false)
+  isTablet                 Boolean  @default(false)
+  isDesktop                Boolean  @default(false)
+  isBot                    Boolean  @default(false)
+  referrer                 String?
+  referrerDomain           String?
+  utmSource                String?
+  utmMedium                String?
+  utmCampaign              String?
+  utmTerm                  String?
+  utmContent               String?
+  searchKeyword            String?
+  searchEngine             String?
+  pageUrl                  String
+  pagePath                 String
+  pageTitle                String?
+  pageType                 String?
+  pageId                   String?
+  timeOnPage               Int?
+  scrollDepth              Int?
+  isBounce                 Boolean  @default(true)
+  exitPage                 Boolean  @default(false)
+  userAgent                String?
+  createdAt                DateTime @default(now())
+  categoryId               String?
+  categoryName             String?
+  ctaClicks                Int      @default(0)
+  keywordIntent            String?
+  tags                     String[]
+  trafficIntent            String?
+  simulation               Boolean  @default(false)
+  analyticsConfidenceScore Float?   @default(100.0)
+  anomalyFlag              Boolean  @default(false)
+  dataQualityIssues        String[]
+  dataSourceType           String?  @default("human")
+  internalLinkClicks       Int      @default(0)
+  productClicks            Int      @default(0)
+  truthScore               Int?
+  intentType               String?
+
+  @@index([sessionId])
+  @@index([ipAddress])
+  @@index([city, district])
+  @@index([deviceType])
+  @@index([pageType, pageId])
+  @@index([createdAt])
+  @@index([country, region, city])
+  @@index([utmSource, utmCampaign])
+  @@index([truthScore])
+  @@index([intentType])
+}
+
+model AnalyticsSession {
+  id                    String    @id @default(cuid())
+  sessionId             String    @unique
+  firstIpAddress        String?
+  firstCountry          String?
+  firstCity             String?
+  firstDistrict         String?
+  firstDeviceType       String?
+  firstPageUrl          String?
+  firstReferrer         String?
+  firstUtmSource        String?
+  pageViews             Int       @default(1)
+  uniquePages           Int       @default(1)
+  duration              Int       @default(0)
+  bounce                Boolean   @default(true)
+  converted             Boolean   @default(false)
+  conversionValue       Float?
+  conversionType        String?
+  country               String?
+  region                String?
+  city                  String?
+  district              String?
+  deviceType            String?
+  os                    String?
+  browser               String?
+  startedAt             DateTime  @default(now())
+  endedAt               DateTime?
+  lastActivityAt        DateTime  @default(now())
+  dataQualityScore      Float?    @default(100.0)
+  isExpired             Boolean   @default(false)
+  sessionTimeoutMinutes Int       @default(30)
+
+  @@index([sessionId])
+  @@index([country, city])
+  @@index([deviceType])
+  @@index([startedAt])
+  @@index([lastActivityAt])
+  @@index([converted])
+}
+
+model AnalyticsCTAClick {
+  id            String   @id @default(cuid())
+  sessionId     String
+  visitId       String?
+  pageType      String?
+  pageId        String?
+  ctaType       String
+  ctaLabel      String?
+  ctaPosition   String?
+  clickLocation String?
+  metadata      Json?
+  createdAt     DateTime @default(now())
+
+  @@index([sessionId])
+  @@index([visitId])
+  @@index([pageType, pageId])
+  @@index([ctaType])
+  @@index([createdAt])
+}
+
+model BounceIntervention {
+  id                 String                          @id @default(cuid())
+  pageId             String
+  pageType           String
+  pagePath           String
+  bounceRate         Float
+  totalVisits        Int
+  interventionActive Boolean                         @default(true)
+  engagementEnforced Boolean                         @default(true)
+  triggers           String?
+  totalInteractions  Int                             @default(0)
+  lastInteractionAt  DateTime?
+  appliedAt          DateTime                        @default(now())
+  updatedAt          DateTime                        @updatedAt
+  interactions       BounceInterventionInteraction[]
+
+  @@unique([pageId, pageType])
+  @@index([pageType, pageId])
+  @@index([bounceRate])
+  @@index([interventionActive])
+}
+
+model BounceInterventionInteraction {
+  id              String             @id @default(cuid())
+  interventionId  String
+  triggerType     String
+  interactionTime Int
+  scrollDepth     Int
+  exitReason      String?
+  timestamp       DateTime           @default(now())
+  intervention    BounceIntervention @relation(fields: [interventionId], references: [id], onDelete: Cascade)
+
+  @@index([interventionId])
+  @@index([triggerType])
+  @@index([timestamp])
+}
+
+model LayoutAdaptation {
+  id           String   @id @default(cuid())
+  pageId       String
+  pageType     String
+  deviceType   String
+  adaptation   String?
+  behaviorData String?
+  appliedAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@unique([pageId, pageType])
+  @@index([pageType, pageId])
+  @@index([deviceType])
+}
+
+model EngineFeedbackLoop {
+  id            String   @id @default(cuid())
+  actionType    String
+  pageId        String?
+  pageType      String?
+  success       Boolean
+  metricsBefore String?
+  metricsAfter  String?
+  improvement   Float?
+  timestamp     DateTime @default(now())
+
+  @@index([actionType])
+  @@index([pageId, pageType])
+  @@index([timestamp])
+  @@index([success])
+}
+
+model AnalyticsDailySummary {
+  id               String   @id @default(cuid())
+  date             DateTime @unique @db.Date
+  totalVisits      Int      @default(0)
+  totalSessions    Int      @default(0)
+  uniqueVisitors   Int      @default(0)
+  pageViews        Int      @default(0)
+  avgDuration      Float    @default(0)
+  bounceRate       Float    @default(0)
+  visitsByCountry  String?
+  visitsByCity     String?
+  visitsByDistrict String?
+  visitsByDevice   String?
+  visitsByOS       String?
+  visitsByBrowser  String?
+  visitsBySource   String?
+  visitsByMedium   String?
+  topPages         String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@index([date])
+}
+
+model AnalyticsLocationStats {
+  id               String    @id @default(cuid())
+  locationType     String
+  locationCode     String?
+  locationName     String
+  totalVisits      Int       @default(0)
+  totalSessions    Int       @default(0)
+  uniqueVisitors   Int       @default(0)
+  avgDuration      Float     @default(0)
+  conversionRate   Float     @default(0)
+  deviceDesktop    Int       @default(0)
+  deviceMobile     Int       @default(0)
+  deviceTablet     Int       @default(0)
+  lastVisitedAt    DateTime?
+  lastCalculatedAt DateTime  @default(now())
+
+  @@unique([locationType, locationCode])
+  @@index([locationType, totalVisits])
+  @@index([locationName])
+}
+
+model AnalyticsDeviceStats {
+  id               String    @id @default(cuid())
+  deviceType       String
+  os               String?
+  browser          String?
+  deviceModel      String?
+  totalVisits      Int       @default(0)
+  totalSessions    Int       @default(0)
+  uniqueDevices    Int       @default(0)
+  avgDuration      Float     @default(0)
+  bounceRate       Float     @default(0)
+  topCountries     String?
+  topCities        String?
+  lastVisitedAt    DateTime?
+  lastCalculatedAt DateTime  @default(now())
+
+  @@unique([deviceType, os, browser])
+  @@index([deviceType, totalVisits])
+}
+
+model AnalyticsSnapshot {
+  id             Int      @id @default(1)
+  totalVisits    Int      @default(0)
+  uniqueVisitors Int      @default(0)
+  generatedAt    DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@map("analytics_snapshot")
+}
+
+model DevicePricing {
+  id              String   @id @default(cuid())
+  deviceBrand     String   @default("Generic")
+  deviceModel     String?
+  deviceType      String
+  minPrice        Int
+  maxPrice        Int
+  avgPrice        Int
+  purchasingPower String
+  category        String
+  marketSegment   String?
+  isActive        Boolean  @default(true)
+  source          String?
+  lastUpdated     DateTime @default(now())
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@unique([deviceBrand, deviceModel])
+  @@index([deviceType])
+  @@index([purchasingPower])
+  @@index([avgPrice])
+}
+
+model UserMarketProfile {
+  id                   String   @id @default(cuid())
+  sessionId            String   @unique
+  economicClass        String
+  devicePriceTier      String?
+  deviceBrand          String?
+  deviceModel          String?
+  avgDevicePrice       Int?
+  problemSeriousness   String
+  avgScrollDepth       Float    @default(0)
+  avgTimeOnPage        Int      @default(0)
+  deepReadPages        Int      @default(0)
+  buyingIntent         String
+  productClicks        Int      @default(0)
+  productViews         Int      @default(0)
+  waClicks             Int      @default(0)
+  checkoutIntents      Int      @default(0)
+  professionPattern    String?
+  primaryVisitTime     String?
+  visitTimePattern     Json?
+  weekdayVisits        Int      @default(0)
+  weekendVisits        Int      @default(0)
+  preferredContentType String?
+  preferredIntent      String?
+  topCategories        String[]
+  topKeywords          String[]
+  confidence           Float    @default(0.5)
+  sampleSize           Int      @default(0)
+  firstSeenAt          DateTime @default(now())
+  lastSeenAt           DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  @@index([economicClass])
+  @@index([buyingIntent])
+  @@index([professionPattern])
+  @@index([lastSeenAt])
+}
+
+model ProfitSignalScore {
+  id                 String   @id @default(cuid())
+  entityType         String
+  entityId           String
+  whatsappClicks     Int      @default(0)
+  marketplaceClicks  Int      @default(0)
+  checkoutIntents    Int      @default(0)
+  repeatProductViews Int      @default(0)
+  rawScore           Float    @default(0)
+  normalizedScore    Float    @default(0)
+  profitSignalScore  Float    @default(0)
+  lastCalculatedAt   DateTime @default(now())
+  sampleSize         Int      @default(0)
+  trend              String?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  @@unique([entityType, entityId])
+  @@index([entityType, profitSignalScore])
+  @@index([profitSignalScore])
+  @@index([lastCalculatedAt])
+}
+
+model KeywordInterestMapping {
+  id               String   @id @default(cuid())
+  keyword          String
+  platform         String
+  interestId       String?
+  interestName     String
+  interestCategory String?
+  relevanceScore   Int      @default(50)
+  searchVolume     Int?
+  competition      String?
+  cpc              Float?
+  isActive         Boolean  @default(true)
+  source           String?
+  lastUpdated      DateTime @default(now())
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@unique([keyword, platform, interestId])
+  @@index([keyword])
+  @@index([platform])
+  @@index([interestCategory])
+}
+
+model AdsInterestMapping {
+  id                String   @id @default(cuid())
+  keyword           String   @unique
+  inferredIntent    String
+  intentConfidence  Int      @default(0)
+  facebookInterests Json?
+  googleInterests   Json?
+  tiktokInterests   Json?
+  synonyms          String[]
+  relatedKeywords   String[]
+  semanticScore     Int      @default(0)
+  behaviorData      Json?
+  behaviorScore     Int      @default(0)
+  overallConfidence Int      @default(0)
+  searchVolume      Int?
+  source            String
+  apiProvider       String?
+  lastAnalyzed      DateTime @default(now())
+  analysisCount     Int      @default(0)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@index([inferredIntent])
+  @@index([overallConfidence])
+  @@index([lastAnalyzed])
+  @@index([source])
+}
+
+model WinningAdSet {
+  id              String    @id @default(cuid())
+  adSetId         String    @unique
+  adSetName       String
+  platform        String
+  keywords        String[]
+  interests       String[]
+  locations       String[]
+  deviceTargeting String[]
+  purchasingPower String?
+  budget          Int
+  actualSpend     Int       @default(0)
+  impressions     Int       @default(0)
+  clicks          Int       @default(0)
+  conversions     Int       @default(0)
+  ctr             Float     @default(0)
+  cpc             Float     @default(0)
+  cpa             Float     @default(0)
+  roas            Float     @default(0)
+  qualityScore    Int       @default(0)
+  status          String    @default("active")
+  winningScore    Int       @default(0)
+  testedAt        DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@index([platform])
+  @@index([status])
+  @@index([winningScore])
+  @@index([roas])
+}
+
+model AdSetLearning {
+  id                 String   @id @default(cuid())
+  patternId          String   @unique
+  patternType        String
+  pattern            Json
+  performanceMetrics Json
+  confidence         Int      @default(0)
+  discoveredAt       DateTime @default(now())
+  lastValidatedAt    DateTime @default(now())
+  validationCount    Int      @default(0)
+  isActive           Boolean  @default(true)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  @@index([patternType])
+  @@index([isActive])
+  @@index([confidence])
+  @@index([patternId])
+}
+
+model AdSetCluster {
+  id                    String   @id @default(cuid())
+  clusterId             String   @unique
+  clusterName           String
+  centroid              Json
+  size                  Int      @default(0)
+  qualityScore          Int      @default(0)
+  conversionProbability Int      @default(0)
+  estimatedLTV          Int      @default(0)
+  confidence            Int      @default(0)
+  learnedFrom           Int      @default(0)
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  @@index([clusterId])
+  @@index([qualityScore])
+  @@index([confidence])
+  @@index([createdAt])
+}
+
+model AdSetPerformanceLog {
+  id               String   @id @default(cuid())
+  adSetId          String
+  decisionType     String
+  decisionReason   String
+  metricsBefore    Json?
+  metricsAfter     Json?
+  confidence       Int?
+  algorithmVersion String   @default("2.0")
+  metadata         Json?
+  createdAt        DateTime @default(now())
+
+  @@index([adSetId])
+  @@index([decisionType])
+  @@index([createdAt])
+}
+
+model SmartFeedbackLoop {
+  id                      String   @id @default(cuid())
+  feedbackId              String   @unique
+  feedbackType            String
+  contentId               String?
+  contentType             String?
+  performanceMetrics      Json
+  visitorData             Json
+  comparisonResult        Json
+  highPerformingInterests Json?
+  newPotentialLocations   Json?
+  topConvertingDevices    Json?
+  adjustedRecommendations Json
+  previousState           Json?
+  changeReason            String?
+  changeImpact            String?
+  lastAnalyzed            DateTime @default(now())
+  analysisInterval        Int      @default(24)
+  updateCount             Int      @default(0)
+  isActive                Boolean  @default(true)
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @updatedAt
+
+  @@index([feedbackType])
+  @@index([contentType])
+  @@index([lastAnalyzed])
+  @@index([isActive])
+}
+
+model AutoGeneratedAdSet {
+  id                   String    @id @default(cuid())
+  adSetId              String    @unique
+  adSetName            String
+  targetLocations      Json
+  interests            Json
+  devicePlacement      Json
+  keywordTargeting     Json
+  copyAngle            Json
+  ctaRecommendation    Json
+  platform             String
+  budgetRecommendation Int       @default(0)
+  bidRecommendation    Int       @default(0)
+  expectedPerformance  Json
+  qualityScore         Int       @default(0)
+  confidence           Int       @default(0)
+  sourceData           Json
+  status               String    @default("draft")
+  exportedAt           DateTime?
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+
+  @@index([platform])
+  @@index([status])
+  @@index([qualityScore])
+  @@index([createdAt])
+}
+
+model AdSetRecommendation {
+  id                         String    @id @default(cuid())
+  recommendationId           String    @unique
+  adSetName                  String
+  platform                   String
+  cityClusters               String[]
+  deviceClassifications      String[]
+  keywords                   String[]
+  keywordInterestMatches     Json
+  suggestedCreativeAngle     Json
+  suggestedCTA               Json
+  estimatedReach             Int       @default(0)
+  estimatedCTR               Float     @default(0)
+  estimatedCPC               Int       @default(0)
+  estimatedCPA               Int       @default(0)
+  qualityScore               Int       @default(0)
+  buyerIntentScore           Int       @default(0)
+  status                     String    @default("pending_approval")
+  requiresManualConfirmation Boolean   @default(true)
+  approvedAt                 DateTime?
+  approvedBy                 String?
+  launchedAt                 DateTime?
+  createdAt                  DateTime  @default(now())
+  updatedAt                  DateTime  @updatedAt
+
+  @@index([status])
+  @@index([platform])
+  @@index([qualityScore])
+  @@index([requiresManualConfirmation])
+  @@index([createdAt])
+}
+
+model DeviceBehaviorInsight {
+  id                 String   @id @default(cuid())
+  deviceBrand        String
+  deviceModel        String?
+  deviceType         String
+  avgPrice           Int
+  minPrice           Int?
+  maxPrice           Int?
+  priceSegment       String
+  purchasingPower    String
+  visitorCount       Int      @default(0)
+  avgEngagement      Float    @default(0)
+  conversionRate     Float    @default(0)
+  avgTimeOnPage      Int      @default(0)
+  scrollDepth        Float    @default(0)
+  bounceRate         Float    @default(0)
+  ctaClickRate       Float    @default(0)
+  copywritingStyle   Json
+  productPositioning Json
+  biddingStrategy    Json
+  confidence         Int      @default(0)
+  lastAnalyzed       DateTime @default(now())
+  analysisCount      Int      @default(0)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  @@unique([deviceBrand, deviceModel, deviceType])
+  @@index([priceSegment])
+  @@index([purchasingPower])
+  @@index([avgPrice])
+  @@index([lastAnalyzed])
+}
+
+model AudienceCluster {
+  id              String   @id @default(cuid())
+  clusterId       String   @unique
+  clusterName     String
+  characteristics Json
+  visitorCount    Int      @default(0)
+  avgEngagement   Float    @default(0)
+  conversionRate  Float    @default(0)
+  qualityScore    Int      @default(0)
+  adAngles        Json
+  isActive        Boolean  @default(true)
+  stabilityScore  Int      @default(0)
+  lastUpdated     DateTime @default(now())
+  updateCount     Int      @default(0)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([isActive])
+  @@index([qualityScore])
+  @@index([lastUpdated])
+  @@index([clusterId])
+}
+
+model AdsLocationRecommendation {
+  id                   String   @id @default(cuid())
+  location             String
+  locationType         String
+  country              String?
+  region               String?
+  city                 String?
+  district             String?
+  visitorCount         Int      @default(0)
+  engagementScore      Int      @default(0)
+  conversionSignal     Int      @default(0)
+  weightedScore        Int      @default(0)
+  priority             String
+  recommendedBudget    Int      @default(0)
+  estimatedReach       Int      @default(0)
+  estimatedConversions Int      @default(0)
+  topKeywords          String[]
+  topDevices           String[]
+  avgTimeOnPage        Int      @default(0)
+  scrollDepth          Int      @default(0)
+  ctaClickRate         Float    @default(0)
+  dataPoints           Int      @default(0)
+  confidence           Int      @default(0)
+  lastCalculatedAt     DateTime @default(now())
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  @@unique([location, locationType])
+  @@index([priority])
+  @@index([weightedScore])
+  @@index([lastCalculatedAt])
+  @@index([country, region, city])
+}
+
+model SmartAdInsight {
+  id                    String   @id @default(cuid())
+  insightType           String
+  insightKey            String
+  location              String?
+  locationType          String?
+  geoAdsetName          String?
+  visitorCount          Int      @default(0)
+  conversionRate        Float    @default(0)
+  avgOrderValue         Float    @default(0)
+  qualityScore          Int      @default(0)
+  keyword               String?
+  platform              String?
+  interestId            String?
+  interestName          String?
+  relevanceScore        Int      @default(0)
+  confidence            Int      @default(0)
+  devicePriceTier       String?
+  economicClass         String?
+  avgDevicePrice        Int?
+  purchasingPower       String?
+  conversionProbability Float    @default(0)
+  estimatedCTR          Float?
+  estimatedCPC          Float?
+  estimatedCPA          Float?
+  estimatedROAS         Float?
+  dataSource            String?
+  sampleSize            Int      @default(0)
+  lastCalculatedAt      DateTime @default(now())
+  isActive              Boolean  @default(true)
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  @@unique([insightType, insightKey])
+  @@index([insightType])
+  @@index([location])
+  @@index([keyword])
+  @@index([platform])
+  @@index([economicClass])
+  @@index([qualityScore])
+  @@index([lastCalculatedAt])
+  @@index([isActive])
+}
+
+model SmartAdAudience {
+  id                    String   @id @default(cuid())
+  audienceId            String   @unique
+  audienceName          String
+  audienceType          String
+  clusterId             String?
+  locations             Json
+  deviceTypes           String[]
+  devicePriceTiers      String[]
+  economicClasses       String[]
+  ageRange              String?
+  gender                String?
+  keywords              String[]
+  interests             Json
+  intentTypes           String[]
+  engagementScore       Int      @default(0)
+  conversionProbability Float    @default(0)
+  estimatedLTV          Float    @default(0)
+  avgSessionDuration    Int?
+  pagesPerSession       Float?
+  bounceRate            Float?
+  estimatedSize         Int      @default(0)
+  qualityScore          Int      @default(0)
+  confidence            Int      @default(0)
+  sampleSize            Int      @default(0)
+  predictedCTR          Float?
+  predictedCPC          Float?
+  predictedCPA          Float?
+  predictedROAS         Float?
+  dataSource            String?
+  lastCalculatedAt      DateTime @default(now())
+  isActive              Boolean  @default(true)
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  @@index([audienceType])
+  @@index([clusterId])
+  @@index([qualityScore])
+  @@index([confidence])
+  @@index([lastCalculatedAt])
+  @@index([isActive])
+}
+
+model SmartAdRecommendation {
+  id                   String   @id @default(cuid())
+  recommendationId     String   @unique
+  recommendationName   String
+  recommendationType   String
+  platform             String
+  adSetName            String?
+  targetAudienceId     String?
+  locations            Json?
+  interests            Json?
+  keywords             String[]
+  deviceTargeting      String[]
+  budgetRecommendation Int?
+  bidRecommendation    Int?
+  budgetStrategy       String?
+  bidStrategy          String?
+  interestBucketName   String?
+  interestBucket       Json?
+  bucketRelevance      Int?
+  copyAngle            Json?
+  ctaRecommendation    Json?
+  expectedCTR          Float?
+  expectedCPC          Float?
+  expectedCPA          Float?
+  expectedROAS         Float?
+  estimatedReach       Int?
+  estimatedImpressions Int?
+  estimatedConversions Int?
+  qualityScore         Int      @default(0)
+  confidence           Int      @default(0)
+  winningScore         Int?
+  basedOnInsights      String[]
+  basedOnAudiences     String[]
+  dataSource           String?
+  sampleSize           Int      @default(0)
+  status               String   @default("suggested")
+  priority             Int      @default(50)
+  lastCalculatedAt     DateTime @default(now())
+  isActive             Boolean  @default(true)
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  @@index([recommendationType])
+  @@index([platform])
+  @@index([targetAudienceId])
+  @@index([qualityScore])
+  @@index([confidence])
+  @@index([status])
+  @@index([priority])
+  @@index([lastCalculatedAt])
+  @@index([isActive])
+}
+
+model KeywordIntelligence {
+  id                 String    @id @default(cuid())
+  keyword            String    @unique
+  primaryKeyword     String
+  secondaryKeywords  String[]
+  semanticKeywords   String[]
+  searchIntent       String
+  searchVolume       Int?
+  difficulty         Float?
+  cpc                Float?
+  competition        String?
+  trendData          String?
+  opportunityScore   Float     @default(0)
+  ctrPotential       Float?
+  rankingPotential   Float?
+  questions          String[]
+  relatedKeywords    String[]
+  longTailVariations String[]
+  dataSource         String?
+  lastFetched        DateTime?
+  isActive           Boolean   @default(true)
+  niche              String?
+  cropType           String?
+  problemType        String?
+  categoryId         String?
+  categoryName       String?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+
+  @@index([searchIntent])
+  @@index([cropType])
+  @@index([problemType])
+  @@index([categoryId])
+  @@index([opportunityScore])
+  @@index([isActive])
+}
+
+model AIContentGenerationLog {
+  id                String    @id @default(cuid())
+  queueItemId       String?
+  blogId            String?
+  phase             String
+  phaseStatus       String
+  phaseData         String?
+  primaryKeyword    String
+  secondaryKeywords String[]
+  semanticKeywords  String[]
+  searchIntent      String
+  categoryId        String?
+  categoryName      String?
+  cropType          String?
+  problemType       String?
+  title             String?
+  outline           String?
+  wordCount         Int?
+  seoScore          Float?
+  productIds        String[]
+  internalLinkIds   String[]
+  imageUrl          String?
+  imageAltText      String?
+  metaTitle         String?
+  metaDescription   String?
+  slug              String?
+  schemaGenerated   Boolean   @default(false)
+  status            String    @default("pending")
+  errorMessage      String?
+  publishStatus     String?
+  startedAt         DateTime  @default(now())
+  completedAt       DateTime?
+  publishedAt       DateTime?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  @@index([queueItemId])
+  @@index([blogId])
+  @@index([phase])
+  @@index([status])
+  @@index([primaryKeyword])
+  @@index([createdAt])
+}
+
+model SchedulerExecutionLog {
+  id         String   @id @default(cuid())
+  scheduler  String
+  engineName String
+  taskType   String
+  status     String
+  duration   Int?
+  error      String?
+  executedAt DateTime @default(now())
+  metadata   Json?
+
+  @@index([scheduler])
+  @@index([engineName])
+  @@index([status])
+  @@index([executedAt])
+}
+
+model EngineBusLog {
+  id                String   @id @default(cuid())
+  engineName        String
+  taskType          String?
+  eventType         String
+  executionId       String?
+  inputData         Json?
+  outputData        Json?
+  resultScore       Float?
+  errorMessage      String?
+  relatedEntityId   String?
+  relatedEntityType String?
+  metadata          Json?
+  timestamp         DateTime @default(now())
+
+  @@index([engineName, timestamp])
+  @@index([eventType, timestamp])
+  @@index([executionId])
+  @@index([relatedEntityType, relatedEntityId])
+  @@index([timestamp])
+}
+
+model EngineBusMetrics {
+  id                   String    @id @default(cuid())
+  engineName           String    @unique
+  period               String
+  periodStart          DateTime
+  periodEnd            DateTime
+  totalExecutions      Int       @default(0)
+  totalInputsUsed      Int       @default(0)
+  totalOutputsProduced Int       @default(0)
+  totalErrors          Int       @default(0)
+  avgResultScore       Float?
+  maxResultScore       Float?
+  minResultScore       Float?
+  successRate          Float     @default(0.0)
+  errorRate            Float     @default(0.0)
+  avgExecutionTime     Int?
+  totalExecutionTime   Int       @default(0)
+  lastExecutionAt      DateTime?
+  metadata             Json?
+  updatedAt            DateTime  @updatedAt
+
+  @@unique([engineName, period, periodStart])
+  @@index([engineName, periodStart, periodEnd])
+  @@index([period, periodStart])
+}
+
+model LearningSnapshot {
+  id                     String   @id @default(cuid())
+  cycleId                String
+  cycleStart             DateTime
+  cycleEnd               DateTime
+  cycleNumber            Int      @unique
+  avgCTR                 Float?
+  ctrChange              Float?
+  avgRankingPosition     Float?
+  rankingMovement        Float?
+  avgIndexSpeed          Int?
+  indexSpeedChange       Int?
+  avgConversionRate      Float?
+  conversionChange       Float?
+  avgBounceRate          Float?
+  bounceRateChange       Float?
+  inputOutputCorrelation Json?
+  workingPatterns        Json?
+  failingPatterns        Json?
+  contentPatterns        Json?
+  keywordIntentWeights   Json?
+  internalLinkStrategy   Json?
+  ctaPlacementLogic      Json?
+  winnersCount           Int      @default(0)
+  losersCount            Int      @default(0)
+  insightsGenerated      Int      @default(0)
+  strategiesUpdated      Int      @default(0)
+  metadata               Json?
+  createdAt              DateTime @default(now())
+
+  @@index([cycleStart, cycleEnd])
+  @@index([cycleNumber])
+}
+
+model AiLearningMemory {
+  id                  String   @id @default(cuid())
+  patternType         String
+  patternKey          String
+  patternValue        String?
+  engineName          String
+  taskName            String?
+  keyword             String?
+  timeOfDay           String?
+  systemLoad          String?
+  failureCount        Int      @default(0)
+  lastFailureAt       DateTime
+  firstFailureAt      DateTime
+  learnedRule         Json?
+  strategyChange      Json?
+  aggressivenessLevel Float    @default(1.0)
+  appliedToEngines    String[]
+  isActive            Boolean  @default(true)
+  confidence          Float    @default(0.5)
+  metadata            Json?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  @@unique([patternType, patternKey, engineName, taskName])
+  @@index([patternType, patternKey])
+  @@index([engineName, taskName])
+  @@index([failureCount])
+  @@index([isActive])
+}
+
+model WinningContentPattern {
+  id          String   @id @default(cuid())
+  patternId   String   @unique
+  patternName String
+  patternType String
+  confidence  Int      @default(0)
+  patternData String?
+  template    String?
+  rules       String?
+  appliedTo   Int      @default(0)
+  successRate Float    @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([patternType])
+  @@index([confidence])
+  @@index([appliedTo])
+}
+
+model ContentTemplate {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  description String?
+  template    String
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([name])
+  @@index([isActive])
+}
+
+model BehavioralDecisionLog {
+  id                   String   @id @default(cuid())
+  decisionId           String
+  pageId               String
+  pageType             String
+  sessionId            String?
+  scrollDepth          Int?
+  timeOnSection        Int?
+  ctaHover             Boolean?
+  exitIntent           Boolean?
+  decisionType         String
+  actionTaken          String
+  ctaOriginalText      String?
+  ctaNewText           String?
+  ctaPosition          String?
+  layoutSection        String?
+  priorityChange       Float?
+  oldPriority          Float?
+  newPriority          Float?
+  retargetingTriggered Boolean  @default(false)
+  retargetingChannel   String?
+  retargetingSegment   String?
+  triggerReason        String?
+  confidence           Float?
+  expectedImpact       String?
+  resultObserved       Boolean  @default(false)
+  actualImpact         String?
+  conversionImproved   Boolean?
+  metadata             Json?
+  createdAt            DateTime @default(now())
+
+  @@index([pageId, pageType])
+  @@index([decisionType])
+  @@index([sessionId])
+  @@index([createdAt])
+  @@index([retargetingTriggered])
+}
+
+model ErrorPatternDB {
+  id                String          @id @default(cuid())
+  errorHash         String          @unique
+  errorType         ErrorType
+  errorCategory     String
+  severity          ErrorSeverity
+  errorMessage      String
+  errorStack        String?
+  errorContext      Json?
+  engineName        String?
+  taskName          String?
+  subsystem         String?
+  relatedEntityId   String?
+  relatedEntityType String?
+  occurrenceCount   Int             @default(1)
+  firstOccurredAt   DateTime        @default(now())
+  lastOccurredAt    DateTime        @default(now())
+  retryStrategy     RetryStrategy?
+  maxRetries        Int             @default(3)
+  retryAttempts     Int             @default(0)
+  lastRetryAt       DateTime?
+  nextRetryAt       DateTime?
+  escalationLevel   EscalationLevel @default(none)
+  escalationReason  String?
+  escalatedAt       DateTime?
+  isResolved        Boolean         @default(false)
+  resolvedAt        DateTime?
+  resolutionNotes   String?
+  resolutionAction  String?
+  similarErrors     String?
+  rootCause         String?
+  suggestedFix      String?
+  metadata          Json?
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+
+  @@index([errorType, severity])
+  @@index([engineName, taskName])
+  @@index([occurrenceCount])
+  @@index([escalationLevel])
+  @@index([isResolved])
+  @@index([lastOccurredAt])
+  @@index([nextRetryAt])
+}
+
+model PriorityMatrix {
+  id               String    @id @default(cuid())
+  taskType         String
+  engineName       String?
+  taskName         String?
+  subsystem        String?
+  revenueWeight    Float     @default(25.0)
+  seoWeight        Float     @default(25.0)
+  speedWeight      Float     @default(25.0)
+  riskWeight       Float     @default(25.0)
+  revenueImpact    Float     @default(50.0)
+  seoImpact        Float     @default(50.0)
+  speedScore       Float     @default(50.0)
+  riskScore        Float     @default(50.0)
+  priorityScore    Float     @default(50.0)
+  avgExecutionTime Int?
+  successRate      Float?
+  revenueGenerated Float?
+  seoTrafficGain   Int?
+  errorCount       Int       @default(0)
+  lastExecutedAt   DateTime?
+  isActive         Boolean   @default(true)
+  autoAdjust       Boolean   @default(true)
+  lastAdjustedAt   DateTime?
+  adjustmentReason String?
+  metadata         Json?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  @@unique([taskType, engineName, taskName])
+  @@index([taskType, priorityScore])
+  @@index([subsystem, priorityScore])
+  @@index([isActive, priorityScore])
+  @@index([lastExecutedAt])
+}
+
+model EventLog {
+  id        String   @id @default(cuid())
+  event     String
+  url       String
+  createdAt DateTime @default(now())
+  meta      Json?
+
+  @@index([event])
+  @@index([createdAt])
+}
+
+model ActivityLog {
+  id         String   @id @default(cuid())
+  actorId    String?
+  action     String
+  entityType String?
+  entityId   String?
+  metadata   Json?
+  createdAt  DateTime @default(now())
+
+  @@index([actorId, createdAt])
+  @@index([action, createdAt])
+  @@index([entityType, entityId])
+  @@index([createdAt])
+}
+
+model ActionApproval {
+  id          String        @id @default(cuid())
+  actionId    String
+  actionType  String
+  targetId    String?
+  priority    String
+  status      String
+  requestedBy String
+  approvedBy  String?
+  createdAt   DateTime      @default(now())
+  approvedAt  DateTime?
+  action      String
+  executedAt  DateTime?
+  traces      ActionTrace[]
+}
+
+model ActionTrace {
+  id               String         @id @default(cuid())
+  actionApprovalId String
+  insightKey       String
+  metricKey        String
+  metricValue      Float
+  explanation      String
+  createdAt        DateTime       @default(now())
+  actionApproval   ActionApproval @relation(fields: [actionApprovalId], references: [id], onDelete: Cascade)
+
+  @@index([actionApprovalId])
+  @@index([insightKey])
+  @@index([metricKey])
+}
+
+model ContentCategory {
+  id          String              @id @default(cuid())
+  name        String
+  slug        String              @unique
+  type        ContentCategoryType @unique
+  description String?
+  summary     String?
+  isActive    Boolean             @default(true)
+  sortOrder   Int                 @default(0)
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @updatedAt
+  posts       BlogPost[]
+
+  @@index([slug])
+  @@index([type])
+  @@index([isActive])
+  @@index([sortOrder])
+}
+
+// ============================================
+// PHASE 1: UNIVERSAL CATEGORY CORE
+// ============================================
+// Unified category system that scales to any niche
+// Behavior controlled by CategoryContext
+
+model Category {
+  id            String            @id @default(cuid())
+  name          String
+  slug          String            @unique // Globally unique, lowercase, hyphenated
+  parentId      String?           // FK -> categories.id, nullable (null = root)
+  level         Int               // 1, 2, 3, or 4 (auto-calculated)
+  type          String            // Flexible string for any niche
+  isActive      Boolean           @default(true)
+  isStructural  Boolean           @default(false) // Structural node (grouping only, no product/blog context)
+  brandId       String?           // Optional: for multi-brand support (null = global)
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+  
+  // Brand relationship (optional)
+  brand     Brand?            @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  
+  // Self-referential relationship
+  parent    Category?         @relation("CategoryHierarchy", fields: [parentId], references: [id])
+  children  Category[]        @relation("CategoryHierarchy")
+  
+  // Context relationships
+  contexts  CategoryContext[]
+  
+  // Product relationships (via context)
+  products  Product[]         @relation("ProductToCategory")
+  
+  // Blog relationships (via context)
+  blogs     Blog[]            @relation("BlogToCategory")
+  blogPosts BlogPost[]        @relation("BlogPostToCategory")
+
+  @@index([parentId])
+  @@index([level])
+  @@index([type])
+  @@index([isActive])
+  @@index([isStructural])
+  @@index([brandId])
+  @@index([slug, isActive])
+}
+
+model CategoryContext {
+  id         String   @id @default(cuid())
+  categoryId String
+  context    CategoryContextType // 'product', 'blog', 'ai'
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@unique([categoryId, context])
+  @@index([categoryId])
+  @@index([context])
+}
+
+enum CategoryContextType {
+  product
+  blog
+  ai
+}
+
+model BlogPost {
+  id                String           @id @default(cuid())
+  title             String
+  slug              String
+  content           String
+  contentMode       String?          @default("HTML") // M-07: TEXT | HTML
+  excerpt           String?
+  status            PostStatus       @default(DRAFT)
+  seoTitle          String?
+  seoDescription    String?
+  seoSchema         Json?
+  primaryKeyword    String?
+  secondaryKeywords String[]
+  wordCount         Int?
+  readingTime       Int?
+  publishedAt       DateTime?
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+  authorId          String?
+  seoKeywords       String?
+  categoryId        String?
+  cornerstoneId     String?
+  isCornerstone     Boolean          @default(false)
+  scheduledAt       DateTime?
+  approvedAt        DateTime?
+  approvedBy        String?
+  brandId           String
+  featuredImageUrl  String?
+  publishSource     String?          // M-08: "MANUAL" | "SCHEDULER"
+  schedulerKeywordId String?         // M-08: Link to ScheduleKeyword for PROCESSING check
+  unifiedCategoryId String?          // PHASE 1: Universal Category Core (optional during migration)
+  approver          Admin?           @relation("BlogPostApprover", fields: [approvedBy], references: [id])
+  author            Admin?           @relation("BlogPostAuthor", fields: [authorId], references: [id])
+  category          ContentCategory? @relation(fields: [categoryId], references: [id])
+  unifiedCategory   Category?        @relation("BlogPostToCategory", fields: [unifiedCategoryId], references: [id])
+  cornerstone       BlogPost?        @relation("BlogPostHubSpoke", fields: [cornerstoneId], references: [id])
+  derivedPosts      BlogPost[]       @relation("BlogPostHubSpoke")
+  contentResult     ContentResult?
+  brand             Brand            @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  relatedProductIds Json?            // PRODUCT-AWARE: Array of product IDs related to this blog post
+  keywordTree       Json?            // PRODUCT-AWARE: Keyword tree structure (primary, secondary, long-tail)
+  intentType        String?          // PRODUCT-AWARE: Search intent type (cara, panduan, tips, rekomendasi, perbandingan, solusi)
+
+  @@unique([brandId, slug])
+  @@index([slug])
+  @@index([status])
+  @@index([publishedAt])
+  @@index([scheduledAt])
+  @@index([status, scheduledAt])
+  @@index([primaryKeyword])
+  @@index([createdAt])
+  @@index([authorId])
+  @@index([approvedBy])
+  @@index([categoryId])
+  @@index([unifiedCategoryId])
+  @@index([isCornerstone])
+  @@index([cornerstoneId])
+  @@index([brandId])
+}
+
+model BlogKeyword {
+  id         String        @id @default(cuid())
+  keyword    String
+  intent     KeywordIntent
+  volume     Int?
+  difficulty Int?
+  cluster    String?
+  language   String?
+  createdAt  DateTime      @default(now())
+
+  @@index([keyword])
+  @@index([intent])
+  @@index([cluster])
+  @@index([createdAt])
+}
+
+model ContentJob {
+  id            String         @id @default(cuid())
+  type          JobType
+  status        JobStatus      @default(PENDING)
+  requestedBy   String
+  scheduledAt   DateTime?
+  startedAt     DateTime?
+  finishedAt    DateTime?
+  params        Json?
+  error         String? // Human-readable error message
+  createdAt     DateTime       @default(now())
+  contentResult ContentResult?
+
+  @@index([status])
+  @@index([requestedBy])
+  @@index([scheduledAt])
+  @@index([createdAt])
+}
+
+// UI-B: Engine Heartbeat - Track engine status
+model EngineHeartbeat {
+  id          String    @id @default(cuid())
+  engineName  String    @default("content-engine")
+  status      String // RUNNING | STOPPED
+  lastBeatAt  DateTime  @default(now())
+  uptimeStart DateTime? // When engine started (for uptime calculation)
+  metadata    Json?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@unique([engineName])
+  @@index([lastBeatAt])
+  @@index([status])
+}
+
+// UI-B: Scheduler Stats Daily - Daily statistics
+model SchedulerStatsDaily {
+  id              String   @id @default(cuid())
+  date            DateTime @default(now())
+  pendingCount    Int      @default(0)
+  processingCount Int      @default(0)
+  doneCount       Int      @default(0)
+  failedCount     Int      @default(0)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@unique([date])
+  @@index([date])
+}
+
+// UI-B: Engine Control - Pause/Resume control
+model EngineControl {
+  id        String    @id @default(cuid())
+  paused    Boolean   @default(false)
+  reason    String?
+  pausedAt  DateTime?
+  resumedAt DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@unique([id])
+}
+
+// ENGINE CONTROL CENTER - Global engine state management
+model EngineState {
+  id            String   @id @default(cuid())
+  aiEngineStatus String  @default("OFF") // ON | OFF
+  aiEngineReason String?
+  seoEngineStatus String @default("OFF") // ON | OFF
+  seoEngineReason String?
+  schedulerStatus String @default("OFF") // ON | OFF
+  accessModeAdmin Boolean @default(true)
+  accessModeEditor Boolean @default(false)
+  lastUpdatedAt  DateTime @default(now())
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@map("EngineState")
+}
+
+model ContentResult {
+  id            String     @id @default(cuid())
+  jobId         String     @unique
+  postId        String?    @unique
+  summary       String?
+  outline       Json?
+  metrics       Json?
+  engineVersion String?
+  createdAt     DateTime   @default(now())
+  job           ContentJob @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  post          BlogPost?  @relation(fields: [postId], references: [id])
+
+  @@index([jobId])
+  @@index([postId])
+  @@index([createdAt])
+}
+
+// STEP 3: Content Schedules - Scheduler Engine Final
+model ContentSchedule {
+  id               String            @id @default(cuid())
+  name             String
+  mode             ScheduleMode // BLOG | PRODUCT
+  status           ScheduleStatus    @default(ACTIVE) // ACTIVE | PAUSED | FINISHED
+  productionPerDay Int               @default(3)
+  startDate        DateTime
+  endDate          DateTime?
+  publishMode      PublishMode       @default(QC_REQUIRED) // AUTO_PUBLISH | DRAFT_ONLY | QC_REQUIRED
+  timeWindowStart  String // TIME format (HH:mm)
+  timeWindowEnd    String // TIME format (HH:mm)
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  keywords         ScheduleKeyword[]
+
+  @@index([status])
+  @@index([mode])
+  @@index([startDate])
+  @@index([createdAt])
+}
+
+// STEP 3: Schedule Keywords - Keyword list for scheduler
+model ScheduleKeyword {
+  id                 String          @id @default(cuid())
+  scheduleId         String
+  primaryKeyword     String // REQUIRED - keyword tidak boleh kosong
+  secondaryKeywords  String[] // OPTIONAL - boleh kosong
+  status             KeywordStatus   @default(PENDING) // PENDING | PROCESSING | DONE | FAILED
+  lastError          String?
+  scheduledPublishAt DateTime? // Waktu publish yang sudah dijadwalkan
+  createdAt          DateTime        @default(now())
+  updatedAt          DateTime        @updatedAt
+  schedule           ContentSchedule @relation(fields: [scheduleId], references: [id], onDelete: Cascade)
+  contentId          String?         // M-08: Link to generated BlogPost/Product ID
+  contentType        String?         // M-08: "BLOG" | "PRODUCT"
+
+  @@index([scheduleId])
+  @@index([status])
+  @@index([createdAt])
+  @@index([contentId, contentType])
+}
+
+enum ScheduleMode {
+  BLOG
+  PRODUCT
+}
+
+enum ScheduleStatus {
+  ACTIVE
+  PAUSED
+  FINISHED
+}
+
+enum PublishMode {
+  AUTO_PUBLISH
+  DRAFT_ONLY
+  QC_REQUIRED
+}
+
+enum KeywordStatus {
+  PENDING
+  PROCESSING
+  DONE
+  FAILED
+}
+
+model MarketingIntegration {
+  id          String              @id @default(cuid())
+  type        String
+  name        String
+  isActive    Boolean             @default(false)
+  credentials String?
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @updatedAt
+  eventMaps   MarketingEventMap[]
+
+  @@index([type])
+  @@index([isActive])
+  @@index([createdAt])
+}
+
+model MarketingEventMap {
+  id                String               @id @default(cuid())
+  integrationId     String
+  eventKey          String
+  externalEventName String
+  enabled           Boolean              @default(false)
+  createdAt         DateTime             @default(now())
+  updatedAt         DateTime             @updatedAt
+  integration       MarketingIntegration @relation(fields: [integrationId], references: [id], onDelete: Cascade)
+
+  @@unique([integrationId, eventKey])
+  @@index([integrationId])
+  @@index([eventKey])
+  @@index([enabled])
+  @@index([createdAt])
+}
+
+model MarketingEventLog {
+  id         String                   @id @default(cuid())
+  eventKey   String
+  entityType MarketingEventEntityType
+  entityId   String?
+  payload    Json
+  source     MarketingEventSource
+  sessionId  String?
+  userId     String?
+  createdAt  DateTime                 @default(now())
+
+  @@index([eventKey])
+  @@index([createdAt])
+  @@index([entityType])
+  @@index([sessionId])
+  @@index([source])
+}
+
+model MarketingCampaign {
+  id         String            @id @default(cuid())
+  name       String
+  objective  String
+  status     String
+  platform   MarketingPlatform
+  externalId String?
+  createdAt  DateTime          @default(now())
+  updatedAt  DateTime          @updatedAt
+
+  @@index([platform])
+  @@index([status])
+}
+
+model CampaignPerformance {
+  id          String            @id @default(cuid())
+  campaignId  String
+  date        DateTime
+  impressions Int               @default(0)
+  clicks      Int               @default(0)
+  conversions Int               @default(0)
+  revenue     Float             @default(0)
+  spend       Float             @default(0)
+  source      MarketingPlatform
+  createdAt   DateTime          @default(now())
+
+  @@index([campaignId, date])
+  @@index([source])
+}
+
+model CampaignAttribution {
+  id              String   @id @default(cuid())
+  campaignId      String
+  eventKey        String
+  attributionRule String
+  score           Float
+  evidence        Json
+  createdAt       DateTime @default(now())
+
+  @@index([campaignId])
+  @@index([eventKey])
+}
+
+model PublicInquiry {
+  id        String   @id @default(cuid())
+  name      String
+  contact   String
+  message   String
+  context   String
+  contextId String?
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime @default(now())
+
+  @@index([context, contextId])
+  @@index([createdAt])
+  @@index([ipAddress, createdAt])
+}
+
+model SalesAdmin {
+  id            String    @id @default(cuid())
+  name          String
+  whatsapp      String
+  shopeeLink    String?
+  tokopediaLink String?
+  isActive      Boolean   @default(true)
+  activeHours   String?
+  clickCount    Int       @default(0)
+  lastUsed      DateTime?
+  sortOrder     Int       @default(0)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@index([isActive, sortOrder])
+  @@index([lastUsed])
+}
+
+model CtaConfig {
+  id              String     @id @default(cuid())
+  enabled         Boolean    @default(false)
+  type            String
+  label           String
+  targetUrl       String
+  placement       String     @default("inline")
+  contentType     String     @default("any")
+  keywordsInclude String?
+  keywordsExclude String?
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+  clicks          CtaClick[]
+
+  @@index([enabled, contentType])
+  @@index([placement])
+}
+
+model CtaClick {
+  id        String    @id @default(cuid())
+  ctaId     String
+  pagePath  String
+  pageType  String?
+  timestamp DateTime  @default(now())
+  cta       CtaConfig @relation(fields: [ctaId], references: [id], onDelete: Cascade)
+
+  @@index([ctaId, timestamp])
+  @@index([pagePath])
+  @@index([pageType, timestamp])
+}
+
+model InternalLinkRule {
+  id              String   @id @default(cuid())
+  sourceType      String
+  targetType      String
+  maxLinks        Int      @default(2)
+  anchorTextStyle String   @default("natural")
+  enabled         Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([sourceType, targetType])
+  @@index([enabled])
+}
+
+model SystemIntegrationConfig {
+  id              String                @id @default(cuid())
+  integrationId   String                @unique
+  name            String
+  type            String
+  isEnabled       Boolean               @default(false)
+  configEncrypted String?
+  healthStatus    String?
+  healthMessage   String?
+  healthCheckedAt DateTime?
+  createdAt       DateTime              @default(now())
+  updatedAt       DateTime              @updatedAt
+  updatedBy       String?
+  auditLogs       IntegrationAuditLog[]
+
+  @@index([integrationId])
+  @@index([type])
+  @@index([isEnabled])
+  @@index([healthStatus])
+}
+
+model IntegrationAuditLog {
+  id            String                  @id @default(cuid())
+  integrationId String
+  action        String
+  changedBy     String
+  changedByName String?
+  changes       Json?
+  errorMessage  String?
+  createdAt     DateTime                @default(now())
+  integration   SystemIntegrationConfig @relation(fields: [integrationId], references: [id], onDelete: Cascade)
+
+  @@index([integrationId])
+  @@index([changedBy])
+  @@index([createdAt])
+  @@index([action])
+}
+
+model SchedulerTask {
+  id              String             @id @default(cuid())
+  taskKey         String             @unique
+  name            String
+  description     String?
+  enabled         Boolean            @default(true)
+  intervalMinutes Int                @default(60)
+  lastRunAt       DateTime?
+  nextRunAt       DateTime?
+  runCount        Int                @default(0)
+  successCount    Int                @default(0)
+  failureCount    Int                @default(0)
+  status          String?
+  lastError       String?
+  lastResult      Json?
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
+  runs            SchedulerTaskRun[]
+
+  @@index([taskKey])
+  @@index([enabled])
+  @@index([nextRunAt])
+  @@index([status])
+}
+
+model SchedulerTaskRun {
+  id         String        @id @default(cuid())
+  taskId     String
+  status     String
+  startedAt  DateTime      @default(now())
+  finishedAt DateTime?
+  durationMs Int?
+  result     Json?
+  error      String?
+  createdAt  DateTime      @default(now())
+  task       SchedulerTask @relation(fields: [taskId], references: [id], onDelete: Cascade)
+
+  @@index([taskId])
+  @@index([startedAt])
+  @@index([status])
+}
+
+model SystemAlert {
+  id             String    @id @default(cuid())
+  alertKey       String
+  title          String
+  message        String
+  severity       String
+  sourceType     String
+  sourceId       String?
+  status         String    @default("ACTIVE")
+  acknowledgedBy String?
+  acknowledgedAt DateTime?
+  resolvedAt     DateTime?
+  metadata       Json?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  @@index([alertKey])
+  @@index([severity])
+  @@index([status])
+  @@index([sourceType, sourceId])
+  @@index([createdAt])
+}
+
+model AdCampaign {
+  id                 String          @id @default(cuid())
+  brandId            String
+  localeId           String
+  platform           String
+  objective          String
+  status             String          @default("DRAFT")
+  campaignName       String
+  externalCampaignId String?
+  budget             Float?
+  startDate          DateTime?
+  endDate            DateTime?
+  metadata           Json?
+  createdAt          DateTime        @default(now())
+  updatedAt          DateTime        @updatedAt
+  brand              Brand           @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  locale             Locale          @relation(fields: [localeId], references: [id], onDelete: Cascade)
+  creatives          AdCreative[]
+  performances       AdPerformance[]
+
+  @@index([brandId])
+  @@index([localeId])
+  @@index([brandId, localeId])
+  @@index([platform])
+  @@index([status])
+  @@index([externalCampaignId])
+}
+
+model AdCreative {
+  id                 String          @id @default(cuid())
+  campaignId         String
+  brandId            String
+  localeId           String
+  platform           String
+  version            Int             @default(1)
+  status             String          @default("DRAFT")
+  primaryText        String
+  headline           String
+  description        String?
+  ctaText            String
+  imageUrl           String?
+  videoUrl           String?
+  externalCreativeId String?
+  metadata           Json?
+  generatedAt        DateTime        @default(now())
+  generatedBy        String?
+  approvedBy         String?
+  approvedAt         DateTime?
+  createdAt          DateTime        @default(now())
+  updatedAt          DateTime        @updatedAt
+  brand              Brand           @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  campaign           AdCampaign      @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  locale             Locale          @relation(fields: [localeId], references: [id], onDelete: Cascade)
+  performances       AdPerformance[]
+
+  @@unique([campaignId, version])
+  @@index([campaignId])
+  @@index([brandId])
+  @@index([localeId])
+  @@index([brandId, localeId])
+  @@index([platform])
+  @@index([status])
+  @@index([version])
+}
+
+model AdPerformance {
+  id              String      @id @default(cuid())
+  campaignId      String
+  creativeId      String?
+  brandId         String
+  localeId        String
+  platform        String
+  date            DateTime
+  impressions     Int         @default(0)
+  clicks          Int         @default(0)
+  ctr             Float       @default(0)
+  cpc             Float?
+  cpm             Float?
+  conversions     Int         @default(0)
+  conversionValue Float?
+  spend           Float?
+  externalDataId  String?
+  ingestedAt      DateTime    @default(now())
+  metadata        Json?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  campaign        AdCampaign  @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  creative        AdCreative? @relation(fields: [creativeId], references: [id])
+
+  @@unique([campaignId, creativeId, date])
+  @@index([campaignId])
+  @@index([creativeId])
+  @@index([brandId])
+  @@index([localeId])
+  @@index([brandId, localeId])
+  @@index([platform])
+  @@index([date])
+}
+
+model AdPerformanceAggregate {
+  id                   String   @id @default(cuid())
+  brandId              String
+  localeId             String?
+  campaignId           String?
+  platform             String?
+  periodType           String
+  periodStart          DateTime
+  periodEnd            DateTime
+  totalImpressions     Int      @default(0)
+  totalClicks          Int      @default(0)
+  avgCtr               Float    @default(0)
+  avgCpc               Float?
+  avgCpm               Float?
+  totalConversions     Int      @default(0)
+  totalConversionValue Float?
+  totalSpend           Float?
+  impressionsTrend     Float?
+  clicksTrend          Float?
+  ctrTrend             Float?
+  conversionsTrend     Float?
+  metadata             Json?
+  calculatedAt         DateTime @default(now())
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  @@unique([brandId, localeId, campaignId, platform, periodType, periodStart])
+  @@index([brandId])
+  @@index([localeId])
+  @@index([campaignId])
+  @@index([brandId, localeId])
+  @@index([platform])
+  @@index([periodType, periodStart])
+}
+
+model AdStrategyReport {
+  id          String   @id @default(cuid())
+  brandId     String
+  localeId    String?
+  reportType  String   @default("ADS_STRATEGY_REPORT")
+  periodStart DateTime
+  periodEnd   DateTime
+  generatedAt DateTime @default(now())
+  insights    Json
+  seoInsights Json?
+  metadata    Json?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([brandId])
+  @@index([localeId])
+  @@index([brandId, localeId])
+  @@index([reportType])
+  @@index([generatedAt])
+}
+
+model Partner {
+  id          String            @id @default(cuid())
+  partnerId   String            @unique
+  partnerName String
+  status      String            @default("ACTIVE")
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  auditLogs   PartnerAuditLog[]
+  scopes      PartnerScope[]
+  sessions    PartnerSession[]
+
+  @@index([partnerId])
+  @@index([status])
+}
+
+model PartnerScope {
+  id        String   @id @default(cuid())
+  partnerId String
+  brandId   String?
+  localeId  String?
+  channel   String?
+  pageType  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  brand     Brand?   @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  locale    Locale?  @relation(fields: [localeId], references: [id], onDelete: Cascade)
+  partner   Partner  @relation(fields: [partnerId], references: [id], onDelete: Cascade)
+
+  @@unique([partnerId, brandId, localeId, channel, pageType])
+  @@index([partnerId])
+  @@index([brandId])
+  @@index([localeId])
+}
+
+model PartnerSession {
+  id           String   @id @default(cuid())
+  partnerId    String
+  sessionToken String   @unique
+  expiresAt    DateTime
+  ipAddress    String?
+  userAgent    String?
+  createdAt    DateTime @default(now())
+  lastAccessAt DateTime @updatedAt
+  partner      Partner  @relation(fields: [partnerId], references: [id], onDelete: Cascade)
+
+  @@index([partnerId])
+  @@index([sessionToken])
+  @@index([expiresAt])
+}
+
+model PartnerAuditLog {
+  id           String   @id @default(cuid())
+  partnerId    String
+  action       String
+  endpoint     String
+  method       String
+  statusCode   Int
+  ipAddress    String?
+  userAgent    String?
+  requestData  Json?
+  responseSize Int?
+  durationMs   Int?
+  error        String?
+  createdAt    DateTime @default(now())
+  partner      Partner  @relation(fields: [partnerId], references: [id], onDelete: Cascade)
+
+  @@index([partnerId])
+  @@index([action])
+  @@index([endpoint])
+  @@index([createdAt])
+  @@index([partnerId, createdAt])
+}
+
+enum CategoryType {
+  PRODUCT
+  BLOG
+}
+
+enum ErrorType {
+  logic
+  data
+  infra
+  ai
+}
+
+enum ErrorSeverity {
+  low
+  medium
+  high
+  critical
+}
+
+enum RetryStrategy {
+  immediate
+  exponential_backoff
+  linear_backoff
+  fixed_delay
+  no_retry
+}
+
+enum EscalationLevel {
+  none
+  logged
+  alerted
+  escalated
+}
+
+enum PostStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+  REVIEW
+  SCHEDULED
+  READY_TO_PUBLISH
+  CANCELLED
+}
+
+enum KeywordIntent {
+  INFORMATIONAL
+  COMMERCIAL
+  TRANSACTIONAL
+}
+
+enum JobType {
+  GENERATE
+  REFRESH
+  OPTIMIZE
+}
+
+enum JobStatus {
+  PENDING
+  RUNNING
+  DONE
+  FAILED
+  SKIPPED
+}
+
+enum ContentCategoryType {
+  PANDUAN_DASAR
+  PENDALAMAN_ANALISIS
+  SOLUSI_PRODUK
+  REFERENSI_UPDATE
+  BLOG
+}
+
+enum MarketingEventEntityType {
+  PRODUCT
+  BLOG
+  PAGE
+  CART
+  ORDER
+  SEARCH
+}
+
+enum MarketingEventSource {
+  WEB
+  ENGINE
+  ADMIN
+}
+
+enum MarketingPlatform {
+  FACEBOOK
+  GOOGLE
+  TIKTOK
+}

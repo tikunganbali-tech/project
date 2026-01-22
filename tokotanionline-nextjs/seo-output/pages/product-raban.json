@@ -1,0 +1,58 @@
+{
+  "title": "Raban - Solusi Pertanian",
+  "description": "Herbisida non-selektif untuk membersihkan gulma sebelum tanam atau di sela perawatan lahan.",
+  "canonical": "http://localhost:3000/produk/raban",
+  "meta": {
+    "og:title": "Raban - Solusi Pertanian",
+    "og:description": "Herbisida non-selektif untuk membersihkan gulma sebelum tanam atau di sela perawatan lahan.",
+    "og:type": "website",
+    "og:image": "/images/RootStimulator.jpg",
+    "og:url": "http://localhost:3000/produk/raban"
+  },
+  "schema": [
+    {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": "Raban",
+      "description": "Gulma mengganggu persiapan lahan dan serap nutrisi. Raban menekan gulma cepat sehingga lahan siap tanam.<br><br>Herbisida non-selektif untuk membersihkan gulma sebelum tanam atau di sela perawatan lahan. Produk Herbisida berkualitas tinggi.  Keunggulan: Kerja cepat, efektif berbagai jenis gulma, membantu persiapan lahan lebih bersih dan efisien..  Cara penggunaan: Semprot gulma secara merata saat cuaca cerah, hindari hujan 6 jam setelah aplikasi..  Produk pertanian terpercaya untuk hasil panen optimal. Dapatkan produk berkualitas dengan harga terbaik hanya di TOKO TANI ONLINE. Produk Herbisida berkualitas tinggi.  Keunggulan: Kerja cepat, efektif berbagai jenis gulma, membantu persiapan lahan lebih bersih dan efisien..  Cara penggunaan: Semprot gulma secara merata saat cuaca cerah, hindari hujan 6 jam setelah aplikasi..  Produk pertanian terpercaya untuk hasil panen optimal. Dapatkan produk berkualitas dengan harga terbaik hanya di TOKO TANI ONLINE.",
+      "image": "/images/RootStimulator.jpg",
+      "category": "Herbisida",
+      "offers": {
+        "@type": "Offer",
+        "price": 44500,
+        "priceCurrency": "IDR",
+        "availability": "https://schema.org/InStock"
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Masalah apa yang diselesaikan produk ini?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Gulma mengganggu persiapan lahan dan serap nutrisi. Raban menekan gulma cepat sehingga lahan siap tanam."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Bagaimana cara aplikasi dan dosis produk ini?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Semprot gulma secara merata saat cuaca cerah, hindari hujan 6 jam setelah aplikasi. 10–15 ml per liter air; volume semprot menyesuaikan kepadatan gulma."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Apa catatan keamanan produk ini?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Gunakan APD, hindari kontak langsung, jangan terkena tanaman budidaya; simpan di tempat aman."
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "title": "Tips Budidaya Padi yang Meningkatkan Hasil Panen hingga 30%",
+  "description": "Panduan praktis budidaya padi modern dengan teknik-teknik terbaru yang terbukti dapat meningkatkan hasil panen secara signifikan.",
+  "canonical": "http://localhost:3000/blog/tips-budidaya-padi-yang-meningkatkan-hasil-panen-hingga-30",
+  "meta": {
+    "og:title": "Tips Budidaya Padi yang Meningkatkan Hasil Panen hingga 30%",
+    "og:description": "Panduan praktis budidaya padi modern dengan teknik-teknik terbaru yang terbukti dapat meningkatkan hasil panen secara signifikan.",
+    "og:type": "article",
+    "og:image": "/images/blog/tips-budidaya-padi-yang-meningkatkan-hasil-panen-h-4e1addc0.jpg",
+    "og:url": "http://localhost:3000/blog/tips-budidaya-padi-yang-meningkatkan-hasil-panen-hingga-30",
+    "article:published_time": "2025-12-24T05:46:48.182Z"
+  },
+  "schema": [
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Tips Budidaya Padi yang Meningkatkan Hasil Panen hingga 30%",
+      "description": "Panduan praktis budidaya padi modern dengan teknik-teknik terbaru yang terbukti dapat meningkatkan hasil panen secara signifikan.",
+      "image": "/images/blog/tips-budidaya-padi-yang-meningkatkan-hasil-panen-h-4e1addc0.jpg",
+      "datePublished": "2025-12-24T05:46:48.182Z",
+      "author": {
+        "@type": "Person",
+        "name": "Admin TOKOTANIONLINE"
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Beranda",
+          "item": "http://localhost:3000"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "http://localhost:3000/blog"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Tips Budidaya Padi yang Meningkatkan Hasil Panen hingga 30%",
+          "item": "http://localhost:3000/blog/tips-budidaya-padi-yang-meningkatkan-hasil-panen-hingga-30"
+        }
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Apa itu Tips Budidaya Padi yang Meningkatkan Hasil Panen hingga 30%?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Panduan praktis budidaya padi modern dengan teknik-teknik terbaru yang terbukti dapat meningkatkan hasil panen secara signifikan."
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "title": "Panduan Lengkap: Pestisida - TOKO TANI ONLINE",
+  "description": "Artikel lengkap tentang pestisida sebagai petani berpengalaman. Pelajari tips, trik, dan informasi terbaru untuk hasil optimal.",
+  "canonical": "http://localhost:3000/blog/pestisida",
+  "meta": {
+    "og:title": "Panduan Lengkap: Pestisida - TOKO TANI ONLINE",
+    "og:description": "Artikel lengkap tentang pestisida sebagai petani berpengalaman. Pelajari tips, trik, dan informasi terbaru untuk hasil optimal.",
+    "og:type": "article",
+    "og:image": "/images/blog/pestisida-bfe94482.jpg",
+    "og:url": "http://localhost:3000/blog/pestisida",
+    "article:published_time": "2025-12-24T07:00:00.241Z"
+  },
+  "schema": [
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Panduan Lengkap: Pestisida",
+      "description": "Artikel lengkap tentang pestisida sebagai petani berpengalaman. Pelajari tips, trik, dan informasi terbaru untuk hasil optimal.",
+      "image": "/images/blog/pestisida-bfe94482.jpg",
+      "datePublished": "2025-12-24T07:00:00.241Z",
+      "author": {
+        "@type": "Person",
+        "name": "Rizki Pratama"
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Beranda",
+          "item": "http://localhost:3000"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "http://localhost:3000/blog"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Panduan Lengkap: Pestisida",
+          "item": "http://localhost:3000/blog/pestisida"
+        }
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Apa yang dimaksud dengan pestisida?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "pestisida adalah praktik penting dalam pertanian modern yang membantu meningkatkan hasil panen dan kualitas produk."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Bagaimana cara memulai dengan pestisida?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Mulailah dengan memahami konsep dasar, kemudian terapkan secara bertahap dengan monitoring yang baik."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Produk apa yang direkomendasikan untuk pestisida?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Gunakan produk berkualitas tinggi yang telah terbukti efektif. Lihat produk rekomendasi di artikel ini."
+          }
+        }
+      ]
+    }
+  ],
+  "keywords": [
+    "pestisida",
+    "pertanian",
+    "budidaya",
+    "tips pertanian",
+    "panduan pertanian"
+  ]
+}

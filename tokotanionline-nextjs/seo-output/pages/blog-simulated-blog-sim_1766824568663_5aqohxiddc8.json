@@ -1,0 +1,49 @@
+{
+  "title": "Simulated Blog sim_1766824568663_fqahjafkj1d | TOKO TANI ONLINE",
+  "description": "Simulated blog excerpt",
+  "canonical": "http://localhost:3000/blog/simulated-blog-sim_1766824568663_5aqohxiddc8",
+  "meta": {
+    "og:title": "Simulated Blog sim_1766824568663_fqahjafkj1d | TOKO TANI ONLINE",
+    "og:description": "Simulated blog excerpt",
+    "og:type": "article",
+    "og:url": "http://localhost:3000/blog/simulated-blog-sim_1766824568663_5aqohxiddc8",
+    "article:published_time": "2025-12-27T08:36:08.663Z"
+  },
+  "schema": [
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Simulated Blog sim_1766824568663_fqahjafkj1d",
+      "description": "Simulated blog excerpt",
+      "datePublished": "2025-12-27T08:36:08.663Z",
+      "author": {
+        "@type": "Person",
+        "name": "Admin"
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Beranda",
+          "item": "http://localhost:3000"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "http://localhost:3000/blog"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Simulated Blog sim_1766824568663_fqahjafkj1d",
+          "item": "http://localhost:3000/blog/simulated-blog-sim_1766824568663_5aqohxiddc8"
+        }
+      ]
+    }
+  ]
+}

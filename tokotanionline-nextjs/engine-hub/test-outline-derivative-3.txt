@@ -1,0 +1,98 @@
+## 📐 STRUKTUR KONTEN (H2/H3) — WAJIB IKUTI
+
+### H1 — Judul Utama
+**"Kesalahan Umum dalam Penggunaan Sarana Produksi Pertanian dan Dampaknya"**
+
+- ✅ Satu H1
+- ✅ Informatif & netral
+- ✅ Fokus pada edukasi risiko, bukan menyalahkan
+
+---
+
+### H2 — Mengapa Kesalahan Terjadi?
+
+**Tujuan:** Memberikan konteks penyebab kesalahan secara empatik, tidak menyalahkan pembaca
+
+**Sub-topik:**
+- Keterbatasan informasi yang tersedia
+- Pengaruh informasi yang tidak lengkap atau menyesatkan
+- Tekanan praktis (waktu, sumber daya, ekspektasi)
+- Miskonsepsi yang sudah tertanam
+- Kurangnya pemahaman tentang integrasi antar komponen
+- **Tone:** Empatik, edukatif, tidak menggurui
+
+---
+
+### H2 — Kesalahan Strategis
+
+**Tujuan:** Mengidentifikasi kesalahan dalam strategi penggunaan saprotan
+
+**Sub-topik:**
+- Memilih produk tanpa memahami kebutuhan spesifik
+- Mengabaikan kondisi lahan & tanaman dalam pengambilan keputusan
+- Tidak mempertimbangkan integrasi antar komponen saprotan
+- Memilih berdasarkan harga semata tanpa analisis kebutuhan
+- Mengganti produk terlalu cepat tanpa evaluasi penyebab masalah
+- **Tone:** Edukatif tentang kesalahan, bukan menyalahkan
+
+---
+
+### H2 — Kesalahan Ekspektasi
+
+**Tujuan:** Menjelaskan kesalahan dalam menetapkan ekspektasi terhadap saprotan
+
+**Sub-topik:**
+- Ekspektasi hasil instan tanpa mempertimbangkan siklus alami tanaman
+- Ekspektasi produk ajaib yang menyelesaikan semua masalah
+- Ekspektasi bahwa satu produk dapat menggantikan perawatan komprehensif
+- Ekspektasi hasil maksimal tanpa usaha budidaya yang memadai
+- Ekspektasi hasil sama untuk semua kondisi
+- **Tone:** Realistis, edukatif, tanpa merendahkan ekspektasi pembaca
+
+---
+
+### H2 — Kesalahan Urutan & Integrasi
+
+**Tujuan:** Mengidentifikasi kesalahan dalam urutan penggunaan dan integrasi komponen
+
+**Sub-topik:**
+- Menggunakan perlindungan tanaman sebelum memahami masalah sebenarnya
+- Memupuk tanpa mengecek kondisi tanah terlebih dahulu
+- Mengganti benih tanpa analisis penyebab kegagalan sebelumnya
+- Mengabaikan timing aplikasi yang tepat
+- Tidak mempertimbangkan interaksi antar komponen (sinergi vs konflik)
+- **Tone:** Edukatif tentang prinsip urutan, bukan tutorial teknis detail
+
+---
+
+### H2 — Dampak Jangka Pendek vs Jangka Panjang
+
+**Tujuan:** Memberikan pemahaman komprehensif tentang konsekuensi kesalahan
+
+**Sub-topik:**
+- **Dampak Jangka Pendek:**
+  - Hasil tidak optimal dalam satu siklus
+  - Pemborosan sumber daya (modal, waktu)
+  - Perlu penanganan tambahan yang seharusnya tidak perlu
+  
+- **Dampak Jangka Panjang:**
+  - Degradasi kualitas tanah
+  - Ketergantungan yang tidak sehat pada input tertentu
+  - Biaya kumulatif yang tidak efisien
+  - Risiko resistensi hama/penyakit
+  - Dampak lingkungan yang berkelanjutan
+
+- **Tone:** Informatif tentang konsekuensi, bukan fear-mongering
+
+---
+
+### Penutup — Pelajaran Utama & Arah Belajar Lanjut
+
+**Tujuan:** Ringkasan pelajaran utama & arah pembelajaran lebih lanjut tanpa hard-sell
+
+**Struktur:**
+- Paragraf 1: Ringkasan poin utama tentang kesalahan & dampaknya
+- Paragraf 2: Refleksi tentang pentingnya memahami kesalahan untuk pembelajaran
+- Paragraf 3: Arahkan ke Cornerstone K1 untuk konteks menyeluruh & dasar yang kuat
+- Paragraf 4: Opsional: arahkan ke artikel turunan lain jika relevan
+- **Tidak ada:** CTA jualan, urgency palsu, hard-sell produk/jasa

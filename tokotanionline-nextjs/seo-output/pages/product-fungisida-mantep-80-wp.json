@@ -1,0 +1,58 @@
+{
+  "title": "Fungisida Mantep 80 WP - Solusi Pertanian",
+  "description": "Fungisida protektif spektrum luas dengan mankozeb 80% untuk mencegah bercak daun & hawar.",
+  "canonical": "http://localhost:3000/produk/fungisida-mantep-80-wp",
+  "meta": {
+    "og:title": "Fungisida Mantep 80 WP - Solusi Pertanian",
+    "og:description": "Fungisida protektif spektrum luas dengan mankozeb 80% untuk mencegah bercak daun & hawar.",
+    "og:type": "website",
+    "og:image": "/images/Fungicide.jpg",
+    "og:url": "http://localhost:3000/produk/fungisida-mantep-80-wp"
+  },
+  "schema": [
+    {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": "Fungisida Mantep 80 WP",
+      "description": "Daun sering terserang bercak/hawar saat lembap. Mantep 80 WP membentuk lapisan proteksi, menekan infeksi jamur sejak awal.<br><br>Fungisida protektif spektrum luas dengan mankozeb 80% untuk mencegah bercak daun & hawar. Produk Fungisida berkualitas tinggi.  Keunggulan: Spektrum luas, tidak mudah resistensi, kompatibel tank-mix, residu rendah jika sesuai dosis..  Cara penggunaan: Larutkan sesuai dosis, semprot merata pada daun (atas-bawah), ulangi 7–10 hari atau saat kondisi lembap..  Produk pertanian terpercaya untuk hasil panen optimal. Dapatkan produk berkualitas dengan harga terbaik hanya di TOKO TANI ONLINE. Produk Fungisida berkualitas tinggi.  Keunggulan: Spektrum luas, tidak mudah resistensi, kompatibel tank-mix, residu rendah jika sesuai dosis..  Cara penggunaan: Larutkan sesuai dosis, semprot merata pada daun (atas-bawah), ulangi 7–10 hari atau saat kondisi lembap..  Produk pertanian terpercaya untuk hasil panen optimal. Dapatkan produk berkualitas dengan harga terbaik hanya di TOKO TANI ONLINE.",
+      "image": "/images/Fungicide.jpg",
+      "category": "Fungisida",
+      "offers": {
+        "@type": "Offer",
+        "price": 48000,
+        "priceCurrency": "IDR",
+        "availability": "https://schema.org/InStock"
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Masalah apa yang diselesaikan produk ini?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Daun sering terserang bercak/hawar saat lembap. Mantep 80 WP membentuk lapisan proteksi, menekan infeksi jamur sejak awal."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Bagaimana cara aplikasi dan dosis produk ini?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Larutkan sesuai dosis, semprot merata pada daun (atas-bawah), ulangi 7–10 hari atau saat kondisi lembap. 1.5–2 gr per liter air; volume semprot menyesuaikan kanopi."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Apa catatan keamanan produk ini?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Gunakan APD (masker, sarung tangan). Hindari penyemprotan saat angin kencang. Simpan kering & tertutup."
+          }
+        }
+      ]
+    }
+  ]
+}

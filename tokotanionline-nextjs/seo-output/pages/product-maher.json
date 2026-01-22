@@ -1,0 +1,58 @@
+{
+  "title": "Maher - Solusi Pertanian",
+  "description": "Insektisida sistemik/ kontak cepat untuk trips, kutu daun, dan ulat pada hortikultura.",
+  "canonical": "http://localhost:3000/produk/maher",
+  "meta": {
+    "og:title": "Maher - Solusi Pertanian",
+    "og:description": "Insektisida sistemik/ kontak cepat untuk trips, kutu daun, dan ulat pada hortikultura.",
+    "og:type": "website",
+    "og:image": "/images/Fungicide.jpg",
+    "og:url": "http://localhost:3000/produk/maher"
+  },
+  "schema": [
+    {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": "Maher",
+      "description": "Trips/kutu daun merusak daun & buah. Maher bekerja cepat dan bertahan lama untuk menekan populasi.<br><br>Insektisida sistemik/ kontak cepat untuk trips, kutu daun, dan ulat pada hortikultura. Produk Insektisida berkualitas tinggi.  Keunggulan: Aksi cepat & sistemik, efektif pada trips dan aphid, efek tahan lama, kompatibel dengan banyak tank-mix..  Cara penggunaan: Larutkan sesuai dosis, semprot merata terutama bagian bawah daun. Ulangi 7–10 hari jika serangan tinggi..  Produk pertanian terpercaya untuk hasil panen optimal. Dapatkan produk berkualitas dengan harga terbaik hanya di TOKO TANI ONLINE. Produk Insektisida berkualitas tinggi.  Keunggulan: Aksi cepat & sistemik, efektif pada trips dan aphid, efek tahan lama, kompatibel dengan banyak tank-mix..  Cara penggunaan: Larutkan sesuai dosis, semprot merata terutama bagian bawah daun. Ulangi 7–10 hari jika serangan tinggi..  Produk pertanian terpercaya untuk hasil panen optimal. Dapatkan produk berkualitas dengan harga terbaik hanya di TOKO TANI ONLINE.",
+      "image": "/images/Fungicide.jpg",
+      "category": "Insektisida",
+      "offers": {
+        "@type": "Offer",
+        "price": 42000,
+        "priceCurrency": "IDR",
+        "availability": "https://schema.org/InStock"
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Masalah apa yang diselesaikan produk ini?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Trips/kutu daun merusak daun & buah. Maher bekerja cepat dan bertahan lama untuk menekan populasi."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Bagaimana cara aplikasi dan dosis produk ini?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Larutkan sesuai dosis, semprot merata terutama bagian bawah daun. Ulangi 7–10 hari jika serangan tinggi. 0.5–1 ml per liter air; sesuaikan dengan kepadatan hama."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Apa catatan keamanan produk ini?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Gunakan APD, hindari kontak langsung. Jangan semprot saat angin kencang. Simpan tertutup rapat."
+          }
+        }
+      ]
+    }
+  ]
+}

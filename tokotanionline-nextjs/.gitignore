@@ -1,0 +1,105 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+/.turbo/
+
+# Cache
+node_modules/.cache/
+.cache/
+*.log
+cleanup.log
+*.tsbuildinfo
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# local env files
+.env*.local
+.env
+.env.production
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# IDE
+.vscode/
+.idea/
+
+# NOTE LAYER (managed by Go Orchestrator)
+../note/status.json
+../note/metrics.json
+../note/progress/
+../note/logs/
+*.swp
+*.swo
+*~
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Logs
+*.log
+server-output.txt
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Temporary files
+*.tmp
+*.temp
+
+# Audit and test reports
+AUDIT-REPORT.json
+AUDIT-REPORT.txt
+ENGINE-TEST-RESULTS.json
+ENGINE-VERIFICATION-REPORT.json
+
+# Old project folders (should not be in repo)
+../AGRICULTURALFRONTENDV8
+../tokotanionline-vite
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Backup files
+*.bak
+*.backup
+
+# Cursor & VCS artifacts (E2-A: Deploy Hygiene)
+.git/cursor/
+.git/cursor/crepe/
+.cursor/
+
+# Production build artifacts
+.next/
+out/
+dist/

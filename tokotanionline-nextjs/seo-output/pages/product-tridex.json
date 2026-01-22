@@ -1,0 +1,58 @@
+{
+  "title": "Tridex - Solusi Pertanian",
+  "description": "Fungisida protektif multi-site untuk bercak daun & antraknosa pada sayuran dan buah.",
+  "canonical": "http://localhost:3000/produk/tridex",
+  "meta": {
+    "og:title": "Tridex - Solusi Pertanian",
+    "og:description": "Fungisida protektif multi-site untuk bercak daun & antraknosa pada sayuran dan buah.",
+    "og:type": "website",
+    "og:image": "/images/RootStimulator.jpg",
+    "og:url": "http://localhost:3000/produk/tridex"
+  },
+  "schema": [
+    {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": "Tridex",
+      "description": "Bercak daun menurunkan fotosintesis. Tridex melapisi permukaan daun untuk cegah infeksi jamur.<br><br>Fungisida protektif multi-site untuk bercak daun & antraknosa pada sayuran dan buah. Produk Fungisida berkualitas tinggi.  Keunggulan: Multi-site, risiko resistensi rendah, proteksi merata, mendukung kesehatan daun..  Cara penggunaan: Semprot merata bagian atas-bawah daun, ulangi 7–10 hari atau sesuai ancaman penyakit..  Produk pertanian terpercaya untuk hasil panen optimal. Dapatkan produk berkualitas dengan harga terbaik hanya di TOKO TANI ONLINE. Produk Fungisida berkualitas tinggi.  Keunggulan: Multi-site, risiko resistensi rendah, proteksi merata, mendukung kesehatan daun..  Cara penggunaan: Semprot merata bagian atas-bawah daun, ulangi 7–10 hari atau sesuai ancaman penyakit..  Produk pertanian terpercaya untuk hasil panen optimal. Dapatkan produk berkualitas dengan harga terbaik hanya di TOKO TANI ONLINE.",
+      "image": "/images/RootStimulator.jpg",
+      "category": "Fungisida",
+      "offers": {
+        "@type": "Offer",
+        "price": 48900,
+        "priceCurrency": "IDR",
+        "availability": "https://schema.org/InStock"
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Masalah apa yang diselesaikan produk ini?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Bercak daun menurunkan fotosintesis. Tridex melapisi permukaan daun untuk cegah infeksi jamur."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Bagaimana cara aplikasi dan dosis produk ini?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Semprot merata bagian atas-bawah daun, ulangi 7–10 hari atau sesuai ancaman penyakit. 1.5–2 gr per liter air."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Apa catatan keamanan produk ini?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Gunakan APD, hindari terhirup, simpan kering dan tertutup."
+          }
+        }
+      ]
+    }
+  ]
+}

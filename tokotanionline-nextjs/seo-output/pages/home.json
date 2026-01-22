@@ -1,0 +1,18 @@
+{
+  "title": "Toko Tani Online — Pusat Kebutuhan Pertanian",
+  "description": "Beli pupuk, bibit, alat tani harga terbaik. Toko online pertanian terlengkap dengan produk berkualitas untuk kebutuhan pertanian Anda.",
+  "canonical": "http://localhost:3000/",
+  "meta": {
+    "og:title": "TOKO TANI ONLINE",
+    "og:description": "Solusi Pertanian Terpercaya",
+    "og:type": "website",
+    "og:url": "http://localhost:3000/"
+  },
+  "schema": {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Toko Tani Online",
+    "url": "http://localhost:3000",
+    "description": "Toko online pertanian terlengkap dengan produk berkualitas"
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "title": "Panduan Lengkap Pemupukan Tanaman Tomat untuk Hasil Optimal",
+  "description": "Pelajari teknik pemupukan tanaman tomat yang tepat mulai dari fase pembibitan hingga panen untuk mendapatkan hasil yang maksimal.",
+  "canonical": "http://localhost:3000/blog/panduan-lengkap-pemupukan-tanaman-tomat-untuk-hasil-optimal",
+  "meta": {
+    "og:title": "Panduan Lengkap Pemupukan Tanaman Tomat untuk Hasil Optimal",
+    "og:description": "Pelajari teknik pemupukan tanaman tomat yang tepat mulai dari fase pembibitan hingga panen untuk mendapatkan hasil yang maksimal.",
+    "og:type": "article",
+    "og:image": "/images/blog/panduan-lengkap-pemupukan-tanaman-tomat-untuk-hasi-b653581f.jpg",
+    "og:url": "http://localhost:3000/blog/panduan-lengkap-pemupukan-tanaman-tomat-untuk-hasil-optimal",
+    "article:published_time": "2025-12-24T05:46:48.189Z"
+  },
+  "schema": [
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Panduan Lengkap Pemupukan Tanaman Tomat untuk Hasil Optimal",
+      "description": "Pelajari teknik pemupukan tanaman tomat yang tepat mulai dari fase pembibitan hingga panen untuk mendapatkan hasil yang maksimal.",
+      "image": "/images/blog/panduan-lengkap-pemupukan-tanaman-tomat-untuk-hasi-b653581f.jpg",
+      "datePublished": "2025-12-24T05:46:48.189Z",
+      "author": {
+        "@type": "Person",
+        "name": "Admin TOKOTANIONLINE"
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Beranda",
+          "item": "http://localhost:3000"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "http://localhost:3000/blog"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Panduan Lengkap Pemupukan Tanaman Tomat untuk Hasil Optimal",
+          "item": "http://localhost:3000/blog/panduan-lengkap-pemupukan-tanaman-tomat-untuk-hasil-optimal"
+        }
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Apa itu Panduan Lengkap Pemupukan Tanaman Tomat untuk Hasil Optimal?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Pelajari teknik pemupukan tanaman tomat yang tepat mulai dari fase pembibitan hingga panen untuk mendapatkan hasil yang maksimal."
+          }
+        }
+      ]
+    }
+  ]
+}

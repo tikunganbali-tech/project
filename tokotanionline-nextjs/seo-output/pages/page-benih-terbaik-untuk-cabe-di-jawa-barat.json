@@ -1,0 +1,22 @@
+{
+  "title": "Cabe Benih Jawa Barat untuk Cabe: Panduan Praktis | TOKO TANI ONLINE",
+  "description": "Pelajari cabe benih Jawa Barat dari pengalaman petani berpengalaman. Panduan lengkap untuk cabe dengan tips praktis dan solusi terbaik. Artikel ini membahas ...",
+  "canonical": "http://localhost:3000/benih-terbaik-untuk-cabe-di-jawa-barat",
+  "meta": {
+    "og:title": "Cabe Benih Jawa Barat untuk Cabe: Panduan Praktis | TOKO TANI ONLINE",
+    "og:description": "Pelajari cabe benih Jawa Barat dari pengalaman petani berpengalaman. Panduan lengkap untuk cabe dengan tips praktis dan solusi terbaik. Artikel ini membahas ...",
+    "og:type": "website",
+    "og:url": "http://localhost:3000/benih-terbaik-untuk-cabe-di-jawa-barat"
+  },
+  "schema": {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Cabe Benih Jawa Barat untuk Cabe: Panduan Praktis | TOKO TANI ONLINE",
+    "description": "Pelajari cabe benih Jawa Barat dari pengalaman petani berpengalaman. Panduan lengkap untuk cabe dengan tips praktis dan solusi terbaik. Artikel ini membahas ..."
+  },
+  "keywords": {
+    "crop": "cabe",
+    "solution": "benih",
+    "region": "Jawa Barat"
+  }
+}

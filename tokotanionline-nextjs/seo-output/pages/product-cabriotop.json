@@ -1,0 +1,58 @@
+{
+  "title": "Cabriotop - Solusi Pertanian",
+  "description": "Fungisida kombinasi dengan aksi proteksi + kuratif untuk antraknosa dan bercak daun.",
+  "canonical": "http://localhost:3000/produk/cabriotop",
+  "meta": {
+    "og:title": "Cabriotop - Solusi Pertanian",
+    "og:description": "Fungisida kombinasi dengan aksi proteksi + kuratif untuk antraknosa dan bercak daun.",
+    "og:type": "website",
+    "og:image": "/images/CabbageSeeds.jpg",
+    "og:url": "http://localhost:3000/produk/cabriotop"
+  },
+  "schema": [
+    {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": "Cabriotop",
+      "description": "Buah terserang antraknosa menyebabkan busuk. Cabriotop memberi proteksi luar-dalam dan memperbaiki masa simpan hasil.<br><br>Fungisida kombinasi dengan aksi proteksi + kuratif untuk antraknosa dan bercak daun. Produk Fungisida berkualitas tinggi.  Keunggulan: Dua bahan aktif: protektif + kuratif, coverage luas, bantu menjaga kehijauan daun (strobilurin effect)..  Cara penggunaan: Larutkan sesuai dosis, semprot merata pada daun dan buah, rotasi 7–10 hari; fokus saat kelembapan tinggi..  Produk pertanian terpercaya untuk hasil panen optimal. Dapatkan produk berkualitas dengan harga terbaik hanya di TOKO TANI ONLINE. Produk Fungisida berkualitas tinggi.  Keunggulan: Dua bahan aktif: protektif + kuratif, coverage luas, bantu menjaga kehijauan daun (strobilurin effect)..  Cara penggunaan: Larutkan sesuai dosis, semprot merata pada daun dan buah, rotasi 7–10 hari; fokus saat kelembapan tinggi..  Produk pertanian terpercaya untuk hasil panen optimal. Dapatkan produk berkualitas dengan harga terbaik hanya di TOKO TANI ONLINE.",
+      "image": "/images/CabbageSeeds.jpg",
+      "category": "Fungisida",
+      "offers": {
+        "@type": "Offer",
+        "price": 57900,
+        "priceCurrency": "IDR",
+        "availability": "https://schema.org/InStock"
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Masalah apa yang diselesaikan produk ini?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Buah terserang antraknosa menyebabkan busuk. Cabriotop memberi proteksi luar-dalam dan memperbaiki masa simpan hasil."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Bagaimana cara aplikasi dan dosis produk ini?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Larutkan sesuai dosis, semprot merata pada daun dan buah, rotasi 7–10 hari; fokus saat kelembapan tinggi. 1–1.5 gr per liter air; sesuaikan tekanan penyakit."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Apa catatan keamanan produk ini?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Gunakan APD, rotasi bahan aktif untuk cegah resistensi. Simpan di tempat kering."
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="https://public-frontend-cos.metadl.com/mgx/img/favicon.png" type="image/png">
+  <title>TOKOTANIONLINE - Toko Pertanian Online Terpercaya</title>
+  <meta name="description" content="Toko pertanian online terpercaya menyediakan benih, fungisida, pupuk, dan alat pertanian berkualitas untuk petani Indonesia. Harga terjangkau, pengiriman cepat!" />
+  <meta name="author" content="TOKOTANIONLINE" />
+  <meta name="keywords" content="toko pertanian, benih, fungisida, pupuk, alat pertanian, saprotan, benih cabe, fungisida mantep, manzate, pertanian online" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="TOKOTANIONLINE - Toko Pertanian Online Terpercaya" />
+  <meta property="og:description" content="Toko pertanian online terpercaya menyediakan benih, fungisida, pupuk, dan alat pertanian berkualitas untuk petani Indonesia." />
+  <meta property="og:image" content="/assets/hero-farmer-field.jpg" />
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:title" content="TOKOTANIONLINE - Toko Pertanian Online Terpercaya" />
+  <meta property="twitter:description" content="Toko pertanian online terpercaya menyediakan benih, fungisida, pupuk, dan alat pertanian berkualitas untuk petani Indonesia." />
+  <meta property="twitter:image" content="/assets/hero-farmer-field.jpg" />
+
+  <!-- Facebook Pixel -->
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', 'YOUR_FACEBOOK_PIXEL_ID');
+    fbq('track', 'PageView');
+  </script>
+
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=YOUR_GA4_ID"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'YOUR_GA4_ID');
+  </script>
+
+  <!-- TikTok Pixel -->
+  <script>
+    !function (w, d, t) {
+      w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var i="https://analytics.tiktok.com/i18n/pixel/events.js";ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=i,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};var o=document.createElement("script");o.type="text/javascript",o.async=!0,o.src=i+"?sdkid="+e+"&lib="+t;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(o,a)};
+      ttq.load('YOUR_TIKTOK_PIXEL_ID');
+      ttq.page();
+    }(window, document, 'ttq');
+  </script>
+</head>
+
+<body>
+  <!-- Facebook Pixel Noscript -->
+  <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=YOUR_FACEBOOK_PIXEL_ID&ev=PageView&noscript=1"
+  /></noscript>
+  
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
+</html>

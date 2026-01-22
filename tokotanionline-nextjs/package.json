@@ -1,0 +1,53 @@
+{
+  "name": "tokotanionline-nextjs",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "seed": "tsx prisma/seed.ts",
+    "prisma:generate": "prisma generate",
+    "prisma:push": "prisma db push",
+    "prisma:studio": "prisma studio",
+    "scheduler:worker": "tsx scripts/scheduler-worker.ts",
+    "scheduler:worker:dry": "tsx scripts/scheduler-worker.ts --dry-run",
+    "scheduler:verify": "tsx scripts/verify-scheduler-setup.ts",
+    "scheduler:init": "tsx scripts/init-scheduler-config.ts"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^5.2.2",
+    "@prisma/client": "^5.0.0",
+    "bcryptjs": "^2.4.3",
+    "date-fns": "^4.1.0",
+    "framer-motion": "^10.16.0",
+    "jose": "^6.1.3",
+    "lucide-react": "^0.562.0",
+    "next": "^14.0.0",
+    "next-auth": "^4.24.0",
+    "nodemailer": "^7.0.12",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-hook-form": "^7.71.1",
+    "react-quill": "^2.0.0",
+    "redis": "^5.10.0",
+    "xlsx": "^0.18.5",
+    "zod": "^3.22.0",
+    "zustand": "^4.4.0"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/node": "^20.0.0",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "autoprefixer": "^10.4.0",
+    "eslint": "^8.0.0",
+    "eslint-config-next": "^14.0.0",
+    "postcss": "^8.4.0",
+    "prisma": "^5.0.0",
+    "tailwindcss": "^3.3.0",
+    "tsx": "^4.0.0",
+    "typescript": "^5.0.0"
+  }
+}

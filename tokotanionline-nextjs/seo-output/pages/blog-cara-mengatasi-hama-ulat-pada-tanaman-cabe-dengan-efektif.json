@@ -1,0 +1,65 @@
+{
+  "title": "Cara Mengatasi Hama Ulat pada Tanaman Cabe dengan Efektif",
+  "description": "Panduan lengkap mengatasi hama ulat pada tanaman cabe menggunakan insektisida yang tepat dan teknik aplikasi yang benar untuk hasil panen maksimal.",
+  "canonical": "http://localhost:3000/blog/cara-mengatasi-hama-ulat-pada-tanaman-cabe-dengan-efektif",
+  "meta": {
+    "og:title": "Cara Mengatasi Hama Ulat pada Tanaman Cabe dengan Efektif",
+    "og:description": "Panduan lengkap mengatasi hama ulat pada tanaman cabe menggunakan insektisida yang tepat dan teknik aplikasi yang benar untuk hasil panen maksimal.",
+    "og:type": "article",
+    "og:image": "/images/blog/cara-mengatasi-hama-ulat-pada-tanaman-cabe-dengan--dc02f028.jpg",
+    "og:url": "http://localhost:3000/blog/cara-mengatasi-hama-ulat-pada-tanaman-cabe-dengan-efektif",
+    "article:published_time": "2025-12-24T05:46:48.174Z"
+  },
+  "schema": [
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Cara Mengatasi Hama Ulat pada Tanaman Cabe dengan Efektif",
+      "description": "Panduan lengkap mengatasi hama ulat pada tanaman cabe menggunakan insektisida yang tepat dan teknik aplikasi yang benar untuk hasil panen maksimal.",
+      "image": "/images/blog/cara-mengatasi-hama-ulat-pada-tanaman-cabe-dengan--dc02f028.jpg",
+      "datePublished": "2025-12-24T05:46:48.174Z",
+      "author": {
+        "@type": "Person",
+        "name": "Admin TOKOTANIONLINE"
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Beranda",
+          "item": "http://localhost:3000"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "http://localhost:3000/blog"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Cara Mengatasi Hama Ulat pada Tanaman Cabe dengan Efektif",
+          "item": "http://localhost:3000/blog/cara-mengatasi-hama-ulat-pada-tanaman-cabe-dengan-efektif"
+        }
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Apa itu Cara Mengatasi Hama Ulat pada Tanaman Cabe dengan Efektif?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Panduan lengkap mengatasi hama ulat pada tanaman cabe menggunakan insektisida yang tepat dan teknik aplikasi yang benar untuk hasil panen maksimal."
+          }
+        }
+      ]
+    }
+  ]
+}

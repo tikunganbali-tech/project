@@ -1,0 +1,233 @@
+// ============================================
+// ANALYTICS DASHBOARD - DETAILED TRACKING
+// ============================================
+
+model AnalyticsVisit {
+  id                String   @id @default(cuid())
+  sessionId         String
+  ipAddress         String?
+  
+  // Geolocation
+  country           String?
+  countryCode       String?
+  region            String? // Province/State
+  regionCode        String?
+  city              String?
+  cityCode          String?
+  district          String? // Kecamatan
+  districtCode      String?
+  subdistrict       String? // Kelurahan/Desa
+  postalCode        String?
+  latitude          Float?
+  longitude         Float?
+  timezone          String?
+  
+  // Device Information
+  deviceType        String? // desktop, mobile, tablet
+  deviceBrand       String? // Apple, Samsung, etc
+  deviceModel       String? // iPhone 13, Galaxy S21, etc
+  os                String? // iOS, Android, Windows, macOS, Linux
+  osVersion         String?
+  browser           String? // Chrome, Safari, Firefox, Edge
+  browserVersion    String?
+  screenWidth       Int?
+  screenHeight      Int?
+  screenResolution  String?
+  isMobile          Boolean  @default(false)
+  isTablet          Boolean  @default(false)
+  isDesktop         Boolean  @default(false)
+  isBot             Boolean  @default(false)
+  
+  // Traffic Source
+  referrer          String?
+  referrerDomain    String?
+  utmSource         String?
+  utmMedium         String?
+  utmCampaign       String?
+  utmTerm           String?
+  utmContent        String?
+  searchKeyword     String?
+  searchEngine      String?
+  
+  // Page Information
+  pageUrl           String
+  pagePath          String
+  pageTitle         String?
+  pageType          String? // blog, product, home, category, etc
+  pageId            String?
+  
+  // Engagement Metrics
+  timeOnPage        Int? // seconds
+  scrollDepth       Int? // percentage 0-100
+  isBounce          Boolean @default(true)
+  exitPage          Boolean @default(false)
+  
+  // User Agent Raw
+  userAgent         String? @db.Text
+  
+  createdAt         DateTime @default(now())
+  
+  @@index([sessionId])
+  @@index([ipAddress])
+  @@index([city, district])
+  @@index([deviceType])
+  @@index([pageType, pageId])
+  @@index([createdAt])
+  @@index([country, region, city])
+  @@index([utmSource, utmCampaign])
+}
+
+model AnalyticsSession {
+  id                String   @id @default(cuid())
+  sessionId         String   @unique
+  
+  // First Visit Info
+  firstIpAddress    String?
+  firstCountry      String?
+  firstCity         String?
+  firstDistrict     String?
+  firstDeviceType   String?
+  firstPageUrl      String?
+  firstReferrer     String?
+  firstUtmSource    String?
+  
+  // Session Metrics
+  pageViews         Int      @default(1)
+  uniquePages       Int      @default(1)
+  duration          Int      @default(0) // seconds
+  bounce            Boolean  @default(true)
+  converted         Boolean  @default(false)
+  conversionValue   Float?
+  conversionType    String? // purchase, contact, signup, etc
+  
+  // Geolocation (from first visit)
+  country           String?
+  region            String?
+  city              String?
+  district          String?
+  
+  // Device (from first visit)
+  deviceType        String?
+  os                String?
+  browser           String?
+  
+  startedAt         DateTime @default(now())
+  endedAt           DateTime?
+  lastActivityAt    DateTime @default(now())
+  
+  @@index([sessionId])
+  @@index([country, city])
+  @@index([deviceType])
+  @@index([startedAt])
+  @@index([lastActivityAt])
+  @@index([converted])
+}
+
+model AnalyticsDailySummary {
+  id                String   @id @default(cuid())
+  date              DateTime @db.Date
+  
+  // Traffic Metrics
+  totalVisits       Int      @default(0)
+  totalSessions     Int      @default(0)
+  uniqueVisitors    Int      @default(0)
+  pageViews         Int      @default(0)
+  avgDuration       Float    @default(0)
+  bounceRate        Float    @default(0)
+  
+  // Geolocation Breakdown
+  visitsByCountry   String?  @db.Text // JSON: {country: count}
+  visitsByCity      String?  @db.Text // JSON: {city: count}
+  visitsByDistrict  String?  @db.Text // JSON: {district: count}
+  
+  // Device Breakdown
+  visitsByDevice    String?  @db.Text // JSON: {device: count}
+  visitsByOS        String?  @db.Text // JSON: {os: count}
+  visitsByBrowser   String?  @db.Text // JSON: {browser: count}
+  
+  // Traffic Source
+  visitsBySource    String?  @db.Text // JSON: {source: count}
+  visitsByMedium    String?  @db.Text // JSON: {medium: count}
+  
+  // Page Performance
+  topPages          String?  @db.Text // JSON: [{url, views, avgDuration}]
+  
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  @@unique([date])
+  @@index([date])
+}
+
+model AnalyticsLocationStats {
+  id                String   @id @default(cuid())
+  locationType      String   // country, region, city, district
+  locationCode      String?  // ISO code or custom code
+  locationName      String
+  
+  // Metrics
+  totalVisits       Int      @default(0)
+  totalSessions     Int      @default(0)
+  uniqueVisitors    Int      @default(0)
+  avgDuration       Float    @default(0)
+  conversionRate    Float    @default(0)
+  
+  // Device Distribution
+  deviceDesktop     Int      @default(0)
+  deviceMobile      Int      @default(0)
+  deviceTablet      Int      @default(0)
+  
+  // Last Update
+  lastVisitedAt     DateTime?
+  lastCalculatedAt  DateTime @default(now())
+  
+  @@unique([locationType, locationCode])
+  @@index([locationType, totalVisits])
+  @@index([locationName])
+}
+
+model AnalyticsDeviceStats {
+  id                String   @id @default(cuid())
+  deviceType        String   // desktop, mobile, tablet
+  os                String?
+  browser           String?
+  deviceModel       String?
+  
+  // Metrics
+  totalVisits       Int      @default(0)
+  totalSessions     Int      @default(0)
+  uniqueDevices     Int      @default(0)
+  avgDuration       Float    @default(0)
+  bounceRate        Float    @default(0)
+  
+  // Location Distribution
+  topCountries      String?  @db.Text // JSON: [{country, visits}]
+  topCities         String?  @db.Text // JSON: [{city, visits}]
+  
+  // Last Update
+  lastVisitedAt     DateTime?
+  lastCalculatedAt  DateTime @default(now())
+  
+  @@unique([deviceType, os, browser])
+  @@index([deviceType, totalVisits])
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

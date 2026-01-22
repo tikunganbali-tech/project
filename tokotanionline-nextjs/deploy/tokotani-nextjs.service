@@ -1,0 +1,59 @@
+# FASE 7.2 — SYSTEMD SERVICE: Next.js Application
+# 
+# Installation:
+#   sudo cp deploy/tokotani-nextjs.service /etc/systemd/system/
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable tokotani-nextjs
+#   sudo systemctl start tokotani-nextjs
+#
+# Management:
+#   sudo systemctl status tokotani-nextjs
+#   sudo systemctl restart tokotani-nextjs
+#   sudo journalctl -u tokotani-nextjs -f
+
+[Unit]
+Description=Tokotani Online Next.js Application
+After=network.target postgresql.service
+Wants=postgresql.service
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+WorkingDirectory=/opt/tokotani-online-nextjs
+Environment="NODE_ENV=production"
+Environment="PORT=3000"
+
+# FASE 7.1: Production ENV - All config from OS environment
+# DO NOT use .env file in production
+# Set environment variables in /etc/systemd/system/tokotani-nextjs.service.d/override.conf
+# Or use systemd EnvironmentFile directive
+
+# Required ENV vars (set via systemd environment or EnvironmentFile):
+# - DATABASE_URL
+# - NEXTAUTH_SECRET
+# - NEXTAUTH_URL
+# - OPENAI_API_KEY (if using AI features)
+# - ENGINE_HUB_URL (if using engine-hub)
+
+ExecStart=/usr/bin/npm start
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=tokotani-nextjs
+
+# Resource limits
+LimitNOFILE=65536
+MemoryMax=2G
+CPUQuota=200%
+
+# Security
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/tokotani-online-nextjs/.next /opt/tokotani-online-nextjs/logs
+
+[Install]
+WantedBy=multi-user.target
