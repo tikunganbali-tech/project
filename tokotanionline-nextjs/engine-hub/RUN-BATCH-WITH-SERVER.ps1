@@ -36,7 +36,7 @@ Write-Host ""
 
 # STEP 3: Start server
 Write-Host "STEP 3: Starting server..." -ForegroundColor Yellow
-$env:OPENAI_API_KEY = "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"
+$env:OPENAI_API_KEY = "YOUR_OPENAI_API_KEY_HERE_6LK2v2RXmx0tE9F3jSjQ8jjml0zsBGWKZhggrmsTaNzb5MMLxMuB-T3BlbkFJ1o5axvKKw1mBIk_Ti5oTdpaRfF72Bkoo16_vc9mxLUoZoxwOne0LtRchu3Yhuos4PXut_fkbMA"
 $env:IMAGE_API_KEY = $env:OPENAI_API_KEY
 
 $serverJob = Start-Job -ScriptBlock {
