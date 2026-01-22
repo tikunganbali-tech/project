@@ -23,12 +23,12 @@ const REQUIRED_ENV_VARS = {
     },
   },
   
-  // AI API Key - CRITICAL (for engine-hub)
+  // AI API Key - OPTIONAL (only required if AI engine is enabled)
   OPENAI_API_KEY: {
-    required: true,
+    required: false, // Only required if AI_ENGINE_DEFAULT=ON or using AI features
     description: 'OpenAI API key for AI content generation',
     validate: (value: string) => {
-      if (!value) return 'OPENAI_API_KEY is required';
+      if (!value) return null; // Optional, no error if missing
       if (value.length <= 100) {
         return 'OPENAI_API_KEY is too short (expected > 100 characters)';
       }
@@ -127,6 +127,12 @@ export function validateProductionEnv(): ValidationResult {
     // Check for .env file usage warning
     if (process.env.ENV === 'development') {
       warnings.push('⚠️ ENV=development detected in production - Should be "production"');
+    }
+    
+    // Check AI engine status - warn if AI enabled but no API key
+    const aiEngineDefault = process.env.AI_ENGINE_DEFAULT || 'OFF';
+    if (aiEngineDefault === 'ON' && !process.env.OPENAI_API_KEY) {
+      warnings.push('⚠️ AI_ENGINE_DEFAULT=ON but OPENAI_API_KEY is not set - AI features will not work');
     }
   }
   
