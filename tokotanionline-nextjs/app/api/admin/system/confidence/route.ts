@@ -110,12 +110,13 @@ export async function GET(request: NextRequest) {
     };
 
     // 2. Engine Stability
+    type EngineStatus = 'ONLINE' | 'OFFLINE';
     let engineStability: {
-      status: 'ONLINE' | 'OFFLINE';
+      status: EngineStatus;
       lastHeartbeat: string | null;
       message: string;
     } = {
-      status: 'OFFLINE',
+      status: 'OFFLINE' as EngineStatus,
       lastHeartbeat: null,
       message: 'Engine Hub tidak dapat diakses. Status tidak diketahui.',
     };
@@ -131,8 +132,9 @@ export async function GET(request: NextRequest) {
 
       if (healthResponse?.ok) {
         const healthData = await healthResponse.json().catch(() => null);
+        const onlineStatus: EngineStatus = 'ONLINE';
         engineStability = {
-          status: 'ONLINE' as 'ONLINE' | 'OFFLINE',
+          status: onlineStatus,
           lastHeartbeat: healthData?.timestamp || new Date().toISOString(),
           message: 'Engine Hub online dan responsif.',
         };

@@ -3,6 +3,11 @@ const nextConfig = {
   // STEP 3 ISOLATION: Minimal config - no custom webpack, no experimental
   reactStrictMode: true,
   
+  // Allow build to continue with TypeScript errors (for production deploy)
+  typescript: {
+    ignoreBuildErrors: false, // Keep false to catch real errors, but fix them
+  },
+  
   // Fix NextAuth vendor chunk issue
   webpack: (config, { isServer }) => {
     if (!isServer) {
