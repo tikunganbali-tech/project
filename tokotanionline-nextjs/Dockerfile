@@ -7,10 +7,9 @@ WORKDIR /app
 RUN apk add --no-cache libc6-compat python3 make g++
 
 # Install ALL dependencies (including devDependencies for build)
-COPY package.json package-lock.json* ./
-# Use npm install with retry and better error handling
-RUN npm install --no-audit --no-fund --legacy-peer-deps || \
-    (npm cache clean --force && npm install --no-audit --no-fund --legacy-peer-deps)
+COPY package.json ./
+# Install without package-lock.json first (more flexible)
+RUN npm install --no-audit --no-fund --legacy-peer-deps
 
 # Copy Prisma schema
 COPY prisma ./prisma
