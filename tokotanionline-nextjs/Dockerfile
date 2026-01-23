@@ -3,10 +3,14 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
+# Install system dependencies for native modules
+RUN apk add --no-cache libc6-compat python3 make g++
+
 # Install ALL dependencies (including devDependencies for build)
 COPY package.json package-lock.json* ./
-# Use npm install for more flexibility (handles lock file issues better)
-RUN npm install --no-audit --no-fund
+# Use npm install with retry and better error handling
+RUN npm install --no-audit --no-fund --legacy-peer-deps || \
+    (npm cache clean --force && npm install --no-audit --no-fund --legacy-peer-deps)
 
 # Copy Prisma schema
 COPY prisma ./prisma
