@@ -24,7 +24,7 @@ RUN npm install --no-audit --no-fund --legacy-peer-deps --verbose 2>&1 | tee /tm
 COPY prisma ./prisma
 
 # Generate Prisma Client (doesn't need DATABASE_URL for generation)
-RUN npx prisma generate
+RUN npx prisma generate || (echo "=== Prisma generate failed ===" && exit 1)
 
 # Copy source code
 COPY . .
@@ -33,8 +33,14 @@ COPY . .
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 
-# Build Next.js app
-RUN npm run build
+# Build Next.js app with better error handling
+# Split build command to avoid issues with && in Docker
+RUN npm run build 2>&1 | tee /tmp/build.log || \
+    (echo "=== Build failed, showing logs ===" && \
+     cat /tmp/build.log && \
+     echo "=== Checking for common issues ===" && \
+     ls -la .next 2>/dev/null || echo "No .next directory" && \
+     exit 1)
 
 # Production stage
 FROM node:20-alpine AS runner
